@@ -1,0 +1,5 @@
+Compilación:
+gcc -L readline/lib -lreadline *.c
+
+Guit:
+git log --pretty=oneline --all --decorate --graph

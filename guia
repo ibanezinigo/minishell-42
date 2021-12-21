@@ -1,1 +1,2 @@
 >brew install readline
+git log --pretty=oneline --all --decorate --graph

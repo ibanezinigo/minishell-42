@@ -1,0 +1,10 @@
+"XXX"
+'XXX'
+|
+>
+>>
+<
+<<
+"hey"hay"hou" ---> heyhayhou
+"hey" hay"hou" ---> hey hayhou
+echo "iojdoij""dssd"

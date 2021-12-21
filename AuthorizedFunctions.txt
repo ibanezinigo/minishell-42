@@ -5,7 +5,6 @@ readline		->	char *readline (const char *prompt);										https://tiswww.case.e
 
 rl_clear_history->	void rl_clear_history (void)	
 					Clear the history list by deleting all of the entries, in the same manner as the History library's clear_history() function.
-
 					This differs from clear_history because it frees private data Readline saves in the history list.
 rl_on_new_line	->	int rl_on_new_line (void)		
 					Tell the update functions that we have moved onto a new (empty) line, usually after outputting a newline.

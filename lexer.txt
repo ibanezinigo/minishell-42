@@ -1,10 +1,13 @@
-"XXX"
-'XXX'
+separatos:
+(espacio)
 |
 >
 >>
 <
 <<
+;
+
+Ejemplos:
 "hey"hay"hou" ---> heyhayhou
 "hey" hay"hou" ---> hey hayhou
 echo "iojdoij""dssd"

@@ -1,0 +1,18 @@
+separatos:
+(espacio)
+|
+>
+>>
+<
+<<
+;
+
+Ejemplos:
+"hey"hay"hou" ---> heyhayhou
+"hey" hay"hou" ---> hey hayhou
+echo "iojdoij""dssd"
+
+
+No entran:
+numero de comillas impares
+mas de 2 (> o <) seguidos 

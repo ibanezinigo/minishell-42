@@ -1,5 +1,8 @@
 Compilación:
 gcc -L readline/lib -lreadline *.c
 
+lexer_count_tokens:
+gcc lexer_count_tokens.c ../utils/utils.c 
+
 Guit:
 git log --pretty=oneline --all --decorate --graph

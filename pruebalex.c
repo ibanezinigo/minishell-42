@@ -6,7 +6,7 @@
 /*   By: ingonzal <ingonzal@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:05:04 by ingonzal          #+#    #+#             */
-/*   Updated: 2021/12/21 20:45:45 by ingonzal         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:13:45 by ingonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <./libft.h>
+#include "./libft/libft.h"
 
 int	ft_count(char *str)
 {
@@ -23,32 +23,70 @@ int	ft_count(char *str)
 
 	pos = 0;
 	i = 0;
-	while (s[i])
+	while (str[i])
 	{
-		if (s[i] == '"' || s[i] == ''')
+		if (str[i] == '"' || str[i] == ''')
 		{
-			while (s[i] != '"' || s[i] != ''')
+			while (str[i] != '"' || str[i] != ''')
 				i++;
 			pos++;
 		}
-		if (s[i] == '<' || s[i] == '>' || s[i] == "|")
+		if (str[i] == '<' || str[i] == '>' || str[i] == "|")
 		{
 			i++;
-			if (s[i] == '<' || s[i] == '>')
+			if (str[i] == '<' || str[i] == '>')
 				i++;
-			if (s[i] - 1 != ' ')
+			if (str[i - 1] != ' ')
 			{
-				if (s[i] + 1 != ' ')
+				if (str[i + 1] != ' ')
 					pos++;
 				pos++;
 			}
 			pos++;
 		}
-		if (s[i] == ' ' && s[i] + 1 != ' ')
+		if (str[i] == ' ' && str[i + 1] != ' ')
 			pos++;
 		i++;
 	}
 	return (pos + 1);
+}
+
+void	*ft_free(char **tab, int pos, char *str)
+{
+	while (pos)
+		free (tab[--pos]);
+	free (tab);
+	free (str);
+	return (NULL);
+}
+
+char	**ft_instr(char **tab, char *str)
+{
+	int count;
+	int	len;
+	int	pos;
+
+	pos = 0;
+	len	= 0;
+	count = -1;
+	while (str[++count])
+	{
+		if (str[count] != ' ')
+		{
+			len++;
+			if (str[count + 1] == ' ' || str[count + 1] == '\0')
+			{
+				tab[pos] = ft_substr(str, (count - len) + 1, len);
+				if (!tab[pos])
+					return (ft_free(tab, pos, str));
+				pos++;
+				len = 0;
+			}
+		}
+	}
+	tab[pos] = NULL;
+	free(str);
+	return (tab);
 }
 
 char	**ft_lexer(char *prompt)
@@ -57,19 +95,16 @@ char	**ft_lexer(char *prompt)
 	char *str;
 	char **tab;
 
-	if(!prompt)
+	if (!prompt)
 		return (NULL);
 	str = ft_strtrim(prompt, ' ');
 	if (!str)
 		return(NULL);
 	num = ft_count(str);
 	tab = (char **)malloc((num + 1) * sizeof(char *));
-	i = 0;
-	while (prompt[i])
-	{
-		if(promt)
-		i++;
-	}
+	if (!tab)
+		return (NULL);
+	return (ft_lexer(tab, str));
 }
 
 int	main()

@@ -6,7 +6,7 @@
 /*   By: ingonzal <ingonzal@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:05:04 by ingonzal          #+#    #+#             */
-/*   Updated: 2021/12/22 14:13:45 by ingonzal         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:00:46 by ingonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == ''')
+		if (str[i] == 34 || str[i] == 39)
 		{
-			while (str[i] != '"' || str[i] != ''')
+			while (str[i] != 34 || str[i] != 39)
 				i++;
 			pos++;
 		}
-		if (str[i] == '<' || str[i] == '>' || str[i] == "|")
+		if (str[i] == '<' || str[i] == '>' || str[i] == 124)
 		{
 			i++;
 			if (str[i] == '<' || str[i] == '>')
@@ -91,20 +91,24 @@ char	**ft_instr(char **tab, char *str)
 
 char	**ft_lexer(char *prompt)
 {
-	int	i;
-	char *str;
-	char **tab;
+	int		i;
+	int		num;
+	char 	*str;
+	char 	**tab;
+	char	set[2];
 
+	set[0] = ' ';
+	set[1] = '\0';
 	if (!prompt)
 		return (NULL);
-	str = ft_strtrim(prompt, ' ');
+	str = ft_strtrim(prompt, set);
 	if (!str)
 		return(NULL);
 	num = ft_count(str);
 	tab = (char **)malloc((num + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
-	return (ft_lexer(tab, str));
+	return (ft_instr(tab, str));
 }
 
 int	main()

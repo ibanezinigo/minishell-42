@@ -5,7 +5,14 @@ separatos:
 >>
 <
 <<
-;
+
+
+no incluido:
+:
+&
+&&
+||
+
 
 Ejemplos:
 "hey"hay"hou" ---> heyhayhou

@@ -1,55 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/22 13:00:53 by iibanez-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
-//Extrae el siguiente token de la cadena
-char	*ft_get_next_token(char *src)
-{
-	return (NULL);
-}
+#include "lexer.h"
 
 //Separa un string en tokens
 char	**ft_lexer(char *readl)
 {
-	char	*buff;
-	char	**result;
-	int		i;
+	struct s_tokens tokens;
 
-	buff = ft_strcpy(readl);
-	while (buff != NULL)
+	tokens.buff = readl;
+	tokens.n_tokens = ft_count_tokens(readl);
+	tokens.result = malloc(sizeof(char **) * tokens.n_tokens + 1);
+	tokens.i = 0;
+	while (tokens.i < tokens.n_tokens)
 	{
-		i = 0;
+		ft_get_next_token(&tokens);
+		tokens.i = tokens.i + 1;
 	}
-	free(buff);
-	return (NULL);
-}
-
-int	main(void)
-{
-	char	*readl;
-
-	readl = readline("test> ");
-	while (readl[0] != 'e')
-	{
-		add_history(readl);
-		printf("%s\n", readl);
-		printf("%i\n", ft_count_tokens(readl));
-		readl = readline("test> ");
-	}
-	return (0);
+	tokens.result[tokens.i] = NULL;
+	return (tokens.result);
 }

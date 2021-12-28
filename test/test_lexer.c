@@ -62,129 +62,85 @@ int	main(void)
 	else
 		printf("2.3 Error \n");
 
-/*
-	char 	t4[] = "1 2 3 4 ";
-	int		t4r = 4;
-	if (ft_count_tokens(t4) != t4r)
-		printf("t4 Error\n");
-	else
-		printf("t4 OK\n");
-
-
-	//QUOTING TEST
-	printf("Quoting test:\n");
-	char 	t5[] = "\"1\"";
-	int		t5r = 1;
-	if (ft_count_tokens(t5) != t5r)
-		printf("t5 Error\n");
-	else
-		printf("t5 OK\n");
-
-	char 	t6[] = "\"1\"1";
-	int		t6r = 1;
-	if (ft_count_tokens(t6) != t6r)
-		printf("t6 Error\n");
-	else
-		printf("t6 OK\n");
-
-	char 	t7[] = "\"1\"\"1\"";
-	int		t7r = 1;
-	if (ft_count_tokens(t7) != t7r)
-		printf("t7 Error\n");
-	else
-		printf("t7 OK\n");
-
-	char 	t8[] = "\"1\"1 \"2\"";
-	int		t8r = 2;
-	if (ft_count_tokens(t8) != t8r)
-		printf("t8 Error\n");
-	else
-		printf("t8 OK\n");
-
-	char 	t9[] = "\"1\'\"1 \"2\'\" ";
-	int		t9r = 2;
-	if (ft_count_tokens(t9) != t9r)
-		printf("t9 Error\n");
-	else
-		printf("t9 OK\n");
-
-
 	// < << > >> testing
 	printf("> < >> << test\n");
-	char 	t10[] = "1 > 3";
-	int		t10r = 3;
-	if (ft_count_tokens(t10) != t10r)
-		printf("t10 Error\n");
+	char 	t30[] = "1 > 3";
+	char	**t30r = ft_lexer(t30);
+	if (ft_strequals(t30r[0],"1") && ft_strequals(t30r[1],">") && ft_strequals(t30r[2],"3"))
+		printf("3.0 Ok\n");
 	else
-		printf("t10 OK\n");
+		printf("3.0 Error \n");
 
-	char 	t11[] = "1>>3 ";
-	int		t11r = 3;
-	if (ft_count_tokens(t11) != t11r)
-		printf("t11 Error\n");
+	char 	t31[] = "1>>3 ";
+	char	**t31r = ft_lexer(t31);
+	if (ft_strequals(t31r[0],"1") && ft_strequals(t31r[1],">>") && ft_strequals(t31r[2],"3"))
+		printf("3.1 Ok\n");
 	else
-		printf("t11 OK\n");
+		printf("3.1 Error \n");
 
-	char 	t12[] = "1 < 3 ";
-	int		t12r = 3;
-	if (ft_count_tokens(t12) != t12r)
-		printf("t12 Error\n");
+	char 	t32[] = "1 < 3 ";
+	char	**t32r = ft_lexer(t32);
+	if (ft_strequals(t32r[0],"1") && ft_strequals(t32r[1],"<") && ft_strequals(t32r[2],"3"))
+		printf("3.2 Ok\n");
 	else
-		printf("t12 OK\n");
+		printf("3.2 Error \n");
 
-	char 	t13[] = "1<<3 ";
-	int		t13r = 3;
-	if (ft_count_tokens(t13) != t13r)
-		printf("t13 Error\n");
+	char 	t33[] = "1<<3 ";
+	char	**t33r = ft_lexer(t33);
+	if (ft_strequals(t33r[0],"1") && ft_strequals(t33r[1],"<<") && ft_strequals(t33r[2],"3"))
+		printf("3.3 Ok\n");
 	else
-		printf("t13 OK\n");
+		printf("3.3 Error \n");
 
 	// | || & && testing
 	printf("| || & && testing\n");
-	char 	t14[] = "1 2  | 4 5";
-	int		t14r = 5;
-	if (ft_count_tokens(t14) != t14r)
-		printf("t14 Error\n");
+	char 	t40[] = "1 2  | 4 5";
+	char	**t40r = ft_lexer(t40);
+	if (ft_strequals(t40r[0],"1") && ft_strequals(t40r[1],"2") && ft_strequals(t40r[2],"|") && ft_strequals(t40r[3],"4") && ft_strequals(t40r[4],"5"))
+		printf("4.0 Ok\n");
 	else
-		printf("t14 OK\n");
+		printf("4.0 Error \n");
 
-	char 	t140[] = "1 2|4 5";
-	int		t140r = 5;
-	if (ft_count_tokens(t140) != t140r)
-		printf("t14.0 Error\n");
+	char 	t41[] = "1 2|4 5";
+	char	**t41r = ft_lexer(t41);
+	if (ft_strequals(t41r[0],"1") && ft_strequals(t41r[1],"2") && ft_strequals(t41r[2],"|") && ft_strequals(t41r[3],"4") && ft_strequals(t41r[4],"5"))
+		printf("4.1 Ok\n");
 	else
-		printf("t14.0 OK\n");
+		printf("4.1 Error \n");
 
-	char 	t141[] = "1 2  || 4 5";
-	int		t141r = 5;
-	if (ft_count_tokens(t141) != t141r)
-		printf("t14.1 Error, %i\n", ft_count_tokens(t141));
+	char 	t42[] = "1 2  || 4 5";
+	char	**t42r = ft_lexer(t42);
+	if (ft_strequals(t42r[0],"1") && ft_strequals(t42r[1],"2") && ft_strequals(t42r[2],"||") && ft_strequals(t42r[3],"4") && ft_strequals(t42r[4],"5"))
+		printf("4.2 Ok\n");
 	else
-		printf("t14.1 OK\n");
+		printf("4.2 Error \n");
 
-	char 	t142[] = "1 2&4 5";
-	int		t142r = 5;
-	if (ft_count_tokens(t142) != t142r)
-		printf("t14.2 Error\n");
+	char 	t43[] = "1 2&4 5";
+	char	**t43r = ft_lexer(t43);
+	if (ft_strequals(t43r[0],"1") && ft_strequals(t43r[1],"2") && ft_strequals(t43r[2],"&") && ft_strequals(t43r[3],"4") && ft_strequals(t43r[4],"5"))
+		printf("4.3 Ok\n");
 	else
-		printf("t14.2 OK\n");
+		printf("4.3 Error \n");
 
-	char 	t143[] = "1 2&&4 5";
-	int		t143r = 5;
-	if (ft_count_tokens(t143) != t143r)
-		printf("t14.3 Error, %i\n", ft_count_tokens(t143));
+	char 	t44[] = "1 2&&4 5";
+	char	**t44r = ft_lexer(t44);
+	if (ft_strequals(t44r[0],"1") && ft_strequals(t44r[1],"2") && ft_strequals(t44r[2],"&&") && ft_strequals(t44r[3],"4") && ft_strequals(t44r[4],"5"))
+		printf("4.4 Ok\n");
 	else
-		printf("t14.3 OK\n");
+		printf("4.4 Error \n");
+
 
 	//Advanced testing
 	printf("Advanced Testing\n");
-	char 	t15[] = "ls -al a* | grep me > file1";
-	int		t15r = 8;
-	if (ft_count_tokens(t15) != t15r)
-		printf("t15 Error\n");
+	char 	t50[] = "ls -al a* | grep me > file1";
+	char	**t50r = ft_lexer(t50);
+	if (ft_strequals(t50r[0],"ls") && ft_strequals(t50r[1],"-al") && ft_strequals(t50r[2],"a*") && ft_strequals(t50r[3],"|") && ft_strequals(t50r[4],"grep") && ft_strequals(t50r[5],"me") && ft_strequals(t50r[6],">") && ft_strequals(t50r[7],"file1"))
+		printf("5.0 Ok\n");
 	else
-		printf("t15 OK\n");
+		printf("5.0 Error \n");
 
+	system("leaks a.out");
+/*
 	char 	t16[] = "/bin/ls";
 	int		t16r = 1;
 	if (ft_count_tokens(t16) != t16r)

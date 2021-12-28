@@ -292,4 +292,6 @@ int	main(void)
 		printf("t35 Error\n");
 	else
 		printf("t35 OK\n");
+
+    system("leaks a.out");
 }

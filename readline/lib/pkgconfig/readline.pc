@@ -1,4 +1,4 @@
-prefix=/Users/iibanez-/.brew/Cellar/readline/8.1.1
+prefix=./readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

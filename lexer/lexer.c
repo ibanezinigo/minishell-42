@@ -13,43 +13,64 @@
 #include "lexer.h"
 #include <stdio.h>
 
-
-void	ft_envars(char *readl)
+void	ft_envars_extend(char *readl, char *result, int *i)
 {
-	int		i;
 	int		j;
 	int		size;
-	char	result[2500];
+	char	*env;
 	char	envvar[2500];
 
+	j = 0;
+	*i = *i + 1;
+	while (readl[*i] && ft_isalnum(readl[*i]) == 1)
+	{
+		envvar[j] = readl[*i];
+		j++;
+		*i = *i + 1;
+	}
+	envvar[j] = '\0';
+	//Introducir variable en el resultado
+	env = getenv(envvar);
+	j = 0;
+	while (env && env[j])
+	{
+		size = ft_strlen(result);
+		result[size] = env[j];
+		result[size + 1] = '\0';
+		j++;
+	}
+}
+
+char	*ft_envars(char *readl, char *res)
+{
+	int		i;
+	int		size;
+	char	quote;
+	char	result[2500];
+
+	quote = '\0';
 	i = 0;
 	result[0] = '\0';
-	envvar[0] = '\0';
 	while (readl[i] != '\0')
 	{
 		size = ft_strlen(result);
-		if (readl[i] == '$')
+		if (readl[i] == '$' && quote == '\0')
 		{
-			i++;
-			j = 0;
-			while (ft_isalnum(readl[i]) == 1)
-			{
-				envvar[j] = readl[i];
-				j++;
-				i++;
-			}
-			envvar[j] = '\0';
-			//Introducir variable en el resultado
-			printf("ENVAR:%s\n",getenv(envvar));
+			ft_envars_extend(readl, result, &i);
 		}
 		else
 		{
 			result[size] = readl[i];
 			result[size + 1] = '\0';
+			i++;
 		}
-		i++;
+		if (readl[i] == '\'' && quote == '\0')
+			quote = '\'';
+		else if (readl[i] == '\'' && quote == '\'')
+			quote = '\0';
 	}
-	printf("END:%s\n", result);
+	res = ft_strcpy(result);
+	return (res);
 }
 
 //Separa un string en tokens
@@ -57,8 +78,8 @@ char	**ft_lexer(char *readl)
 {
 	struct s_tokens tokens;
 
-	ft_envars(readl);
-	tokens.buff = readl;
+	tokens.buff = ft_envars(readl, tokens.buff);
+	//tokens.buff = readl;
 	tokens.n_tokens = ft_count_tokens(readl);
 	tokens.result = malloc(sizeof(char **) * tokens.n_tokens + 1);
 	tokens.i = 0;

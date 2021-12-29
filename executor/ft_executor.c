@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 14:50:18 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 15:03:39 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,17 +139,28 @@ void	ft_echo(char *argv[], char **envp)
 	n = 0;
 	while (argv[i] != NULL)
 	{
-		if (start == 0 && argv[i][0] == '-')
+		if (start == 1)
+			printf(" ");
+		if (start == 0 && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 		{
-			j = 0;
+			j = 1;
+			while(argv[i][j])
+			{
+				if (argv[i][j] != 'n')
+					start = 1;
+				j++;
+			}
+			if (start == 0 && ft_strlen(argv[i]) > 1)
+				n = 1;
 		}
 		else
 			start = 1;
 		if (start == 1)
-			printf("%s ",argv[i]);
+			printf("%s",argv[i]);
 		i++;
 	}
-	printf("\n");
+	if (n == 0)
+		printf("\n");
 }
 
 int ft_execute(char *argv[], char **envp)

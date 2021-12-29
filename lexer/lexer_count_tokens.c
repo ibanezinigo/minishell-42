@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:23:08 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/22 13:11:53 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 11:52:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	ft_count_tokens(char *str)
 		i++;
 	}
 	if (ft_isspace(last_char) == 0 && last_char != '\0'
-		&& last_char != '>' && last_char != '<' && last_char != '|' && last_char != '&')
+		&& last_char != '>' && last_char != '<'
+		&& last_char != '|' && last_char != '&')
 		tokens++;
 	return (tokens);
 }

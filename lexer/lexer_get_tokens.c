@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/28 17:48:03 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 11:53:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,20 @@ void	ft_get_quoted_2(struct s_tokens *tokens, int *i, int *j, char *quote)
 		*i = *i + 1;
 	}
 	else
-		{
-			*quote = tokens->buff[*i + *j + 1];
-			*i = *i + 2;
-		}
+	{
+		*quote = tokens->buff[*i + *j + 1];
+		*i = *i + 2;
+	}
 }
 
 void	ft_get_quoted(struct s_tokens *tokens)
 {
 	int		i;
 	int		j;
-	char 	quote;
+	char	quote;
 
-	tokens->result[tokens->i] = malloc(sizeof(char) * ft_strlen(tokens->buff) + 1);
+	tokens->result[tokens->i] = malloc(sizeof(char)
+			* ft_strlen(tokens->buff) + 1);
 	i = 0;
 	while (ft_isspace(tokens->buff[i]))
 		i++;
@@ -95,7 +96,7 @@ void	ft_get_special_token(struct s_tokens *tokens)
 	j = 0;
 	while (ft_special_char(tokens->buff[i + j]))
 	{
-		tokens->result[tokens->i][j] = tokens->buff[i + j]; 
+		tokens->result[tokens->i][j] = tokens->buff[i + j];
 		j++;
 	}
 	tokens->result[tokens->i][j] = '\0';
@@ -112,7 +113,8 @@ void	ft_get_next_token(struct s_tokens *tokens)
 		i++;
 	if ((tokens->buff[i] == 34 || tokens->buff[i] == 39))
 		ft_get_quoted(tokens);
-	else if (tokens->buff[i] == '<' || tokens->buff[i] == '>' || tokens->buff[i] == '|' || tokens->buff[i] == '&')
+	else if (tokens->buff[i] == '<' || tokens->buff[i] == '>'
+		|| tokens->buff[i] == '|' || tokens->buff[i] == '&')
 		ft_get_special_token(tokens);
 	else if (ft_isspace(tokens->buff[i]) == 0)
 		ft_get_normal_string(tokens);

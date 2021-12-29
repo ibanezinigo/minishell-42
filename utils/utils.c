@@ -6,13 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/28 19:02:45 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 11:56:41 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void ft_strcut_toend(char *str, int from)
+void	ft_strcut_toend(char *str, int from)
 {
 	int	i;
 
@@ -46,7 +46,8 @@ int	ft_strequals(char *str1, char *str2)
 //Devuelve 1 si contiene un caractes de espaciado, si no 0
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\n' || c == '\t' | c == '\v' || c == '\f' || c == '\r')
+	if (c == ' ' || c == '\n' || c == '\t'
+		|| c == '\v' || c == '\f' || c == '\r')
 		return (1);
 	return (0);
 }
@@ -116,7 +117,7 @@ char	*ft_strcat(char *dst, char *src)
 	int		i;
 	int		j;
 	char	*result;
-	
+
 	result = malloc(sizeof(char) * (ft_strlen(dst) + ft_strlen(src) + 1));
 	i = 0;
 	while (dst[i])
@@ -154,6 +155,7 @@ int	ft_isdigit(int c)
 		return (1);
 	return (0);
 }
+
 int	ft_isalpha(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))

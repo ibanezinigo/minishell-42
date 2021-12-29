@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/28 19:13:19 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 11:51:32 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_envars_extend(char *readl, char *result, int *i)
 		*i = *i + 1;
 	}
 	envvar[j] = '\0';
-	//Introducir variable en el resultado
 	env = getenv(envvar);
 	j = 0;
 	while (env && env[j])
@@ -76,11 +75,10 @@ char	*ft_envars(char *readl, char *res)
 //Separa un string en tokens
 char	**ft_lexer(char *readl)
 {
-	struct s_tokens tokens;
+	struct s_tokens	tokens;
 
 	tokens.buff = ft_envars(readl, tokens.buff);
-	//tokens.buff = readl;
-	tokens.n_tokens = ft_count_tokens(readl);
+	tokens.n_tokens = ft_count_tokens(tokens.buff);
 	tokens.result = malloc(sizeof(char **) * tokens.n_tokens + 1);
 	tokens.i = 0;
 	while (tokens.i < tokens.n_tokens)

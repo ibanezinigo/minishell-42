@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 14:17:37 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:39:23 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void	ft_envars_extend(char *readl, char *result, int *i)
 		*i = *i + 1;
 	}
 	envvar[j] = '\0';
+	if (ft_strlen(envvar) == 0)
+	{
+		size = ft_strlen(result);
+		result[size] = '$';
+		result[size + 1] = '\0';
+		return;
+	}
 	env = getenv(envvar);
 	j = 0;
 	while (env && env[j])
@@ -48,26 +55,24 @@ char	*ft_envars(char *readl, char *res)
 	char	result[2500];
 
 	quote = '\0';
-	i = 0;
 	result[0] = '\0';
+	i = 0;
 	while (readl[i] != '\0')
 	{
 		size = ft_strlen(result);
-		if (readl[i] == '$' && quote == '\0')
+		if (readl[i] == '$' && quote != '\'')
 		{
 			ft_envars_extend(readl, result, &i);
-			//printf("%i\n",i);
 		}
 		else
 		{
 			result[size] = readl[i];
 			result[size + 1] = '\0';
 			i++;
-			//printf("%i\n", i);
 		}
-		if (readl[i] == '\'' && quote == '\0')
-			quote = '\'';
-		else if (readl[i] == '\'' && quote == '\'')
+		if ((readl[i] == '\'' || readl[i] == '\"') && quote == '\0')
+			quote = readl[i];
+		else if (readl[i] == quote)
 			quote = '\0';
 	}
 	res = ft_strcpy(result);
@@ -81,7 +86,7 @@ char	**ft_lexer(char *readl)
 
 	tokens.buff = ft_envars(readl, tokens.buff);
 	tokens.n_tokens = ft_count_tokens(tokens.buff);
-	tokens.result = malloc(sizeof(char **) * tokens.n_tokens + 1);
+	tokens.result = malloc(sizeof(char **) * (tokens.n_tokens + 1));
 	tokens.i = 0;
 	while (tokens.i < tokens.n_tokens)
 	{

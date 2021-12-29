@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 14:50:46 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:20:44 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	ft_get_normal_string(struct s_tokens *tokens)
 
 	i = 0;
 	//Ignora espacios del inicio
-	while (tokens->buff[i] != '\0' && ft_isspace(tokens->buff[i]) == 0
-		&& ft_special_char(tokens->buff[i]) == 0)
+	while (tokens->buff[i] != '\0') //&& ft_isspace(tokens->buff[i]) == 0 && ft_special_char(tokens->buff[i]) == 0
 		i++;
 	tokens->result[tokens->i] = malloc(sizeof(char) * (i + 1));
 	i = 0;
@@ -34,12 +33,20 @@ void	ft_get_normal_string(struct s_tokens *tokens)
 		&& ft_special_char(tokens->buff[i + j]) == 0)
 	{
 		if (quote == '\0' && (tokens->buff[i + j] == '\'' || tokens->buff[i + j] == '\"'))
+		{
 			quote = tokens->buff[i + j];
+			i++;
+		}
 		else if (quote == tokens->buff[i + j])
+		{
 			quote = '\0';
+			i++;
+		}
 		else
+		{
 			tokens->result[tokens->i][j] = tokens->buff[i + j];
-		j++;
+			j++;
+		}
 	}
 	tokens->result[tokens->i][j] = '\0';
 	ft_strcut_toend(tokens->buff, i + j);
@@ -72,6 +79,7 @@ void	ft_get_quoted(struct s_tokens *tokens)
 
 	tokens->result[tokens->i] = malloc(sizeof(char)
 			* ft_strlen(tokens->buff) + 1);
+	tokens->result[tokens->i][0] = '\0';
 	i = 0;
 	while (ft_isspace(tokens->buff[i]))
 		i++;

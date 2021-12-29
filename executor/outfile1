@@ -1,9 +1,0 @@
-total 109
--rwxr-xr-x  1 iibanez-  2021_urduliz    50K Dec 28 14:26 a.out
--rw-r--r--  1 iibanez-  2021_urduliz   527B Dec 28 15:31 hey
--rw-r--r--  1 iibanez-  2021_urduliz     5B Dec 28 15:20 infile1
--rw-r--r--  1 iibanez-  2021_urduliz     6B Dec 28 15:21 infile2
--rw-r--r--  1 iibanez-  2021_urduliz   521B Dec 28 15:29 out
--rw-r--r--  1 iibanez-  2021_urduliz     0B Dec 28 15:31 outfile1
--rw-r--r--  1 iibanez-  2021_urduliz     0B Dec 28 15:25 outfile2
--rw-r--r--  1 iibanez-  2021_urduliz   1.4K Dec 28 14:51 test.c

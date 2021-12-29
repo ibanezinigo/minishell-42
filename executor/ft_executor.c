@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 15:03:39 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:53:37 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	ft_cd(char *argv[], char **envp)
 	int	result;
 	
 	if (argv[1] == NULL)
-		return ;
-	if (ft_strequals(argv[1], "~"))
+		result = chdir(getenv("HOME"));
+	else if (ft_strequals(argv[1], "~"))
 		result = chdir(getenv("HOME"));
 	else
 		result = chdir(argv[1]);

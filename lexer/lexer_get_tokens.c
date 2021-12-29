@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 14:40:38 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:50:46 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,18 +122,15 @@ void	ft_get_next_token(struct s_tokens *tokens)
 		i++;
 	if ((tokens->buff[i] == 34 || tokens->buff[i] == 39))
 	{
-		printf("quoted\n");
 		ft_get_quoted(tokens);
 	}
 	else if (tokens->buff[i] == '<' || tokens->buff[i] == '>'
 		|| tokens->buff[i] == '|' || tokens->buff[i] == '&')
 	{
-		printf("special\n");
 		ft_get_special_token(tokens);
 	}
 	else if (ft_isspace(tokens->buff[i]) == 0)
 	{
-		printf("normal\n");
 		ft_get_normal_string(tokens);
 	}
 }

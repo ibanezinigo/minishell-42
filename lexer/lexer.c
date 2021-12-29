@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 11:51:32 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:17:37 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ char	*ft_envars(char *readl, char *res)
 		if (readl[i] == '$' && quote == '\0')
 		{
 			ft_envars_extend(readl, result, &i);
+			//printf("%i\n",i);
 		}
 		else
 		{
 			result[size] = readl[i];
 			result[size + 1] = '\0';
 			i++;
+			//printf("%i\n", i);
 		}
 		if (readl[i] == '\'' && quote == '\0')
 			quote = '\'';

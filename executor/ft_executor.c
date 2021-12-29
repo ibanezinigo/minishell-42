@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 11:48:50 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:09:42 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <errno.h>
+#include <string.h>
 #include "../utils/utils.h"
 
 void	ft_die(char *e)
@@ -53,7 +55,7 @@ char	*ft_search_dir(char **path, char *search)
 	return (NULL);
 }
 
-int	ft_execute(char *argv[], char **envp2)
+int	ft_execute_not_builtin(char *argv[], char **envp2)
 {
 	int		link[2];
 	pid_t	pid;
@@ -84,5 +86,77 @@ int	ft_execute(char *argv[], char **envp2)
 		printf("%.*s", nbytes, foo);
 		wait(NULL);
 	}
+	return (0);
+}
+
+void	ft_cd(char *argv[], char **envp)
+{
+	int	result;
+	
+	if (argv[1] == NULL)
+		return ;
+	if (ft_strequals(argv[1], "~"))
+		result = chdir(getenv("HOME"));
+	else
+		result = chdir(argv[1]);
+	if (result == -1)
+		printf("-bash: cd: %s: %s\n", argv[1], strerror(errno));
+}
+
+void 	ft_pwd(char *argv[], char **envp)
+{
+	char buff[2500];
+
+	printf("%s\n", getcwd(buff, 2500));
+}
+
+void	ft_env(char *argv[], char **envp)
+{
+	int	i;
+
+	while(envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
+
+void	ft_exit()
+{
+	exit(EXIT_SUCCESS);
+}
+
+
+void	ft_echo(char *argv[], char **envp)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i] != NULL)
+	{
+		printf("%s ",argv[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+int ft_execute(char *argv[], char **envp)
+{
+	if (ft_strequals(argv[0], "echo"))
+		ft_echo(argv, envp);
+	else if (ft_strequals(argv[0], "cd"))
+		ft_cd(argv, envp);
+	else if (ft_strequals(argv[0], "pwd"))
+		ft_pwd(argv, envp);
+	else if (ft_strequals(argv[0], "export"))
+		printf("export\n");
+	else if (ft_strequals(argv[0], "unset"))
+		printf("unset\n");
+	else if (ft_strequals(argv[0], "env"))
+		ft_env(argv, envp);
+	else if (ft_strequals(argv[0], "exit"))
+		ft_exit();
+	else
+		ft_execute_not_builtin(argv, envp);
 	return (0);
 }

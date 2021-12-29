@@ -6,18 +6,21 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 11:53:34 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:40:38 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include <stdio.h>
 
 void	ft_get_normal_string(struct s_tokens *tokens)
 {
 	int		i;
 	int		j;
+	int		quote;
 
 	i = 0;
+	//Ignora espacios del inicio
 	while (tokens->buff[i] != '\0' && ft_isspace(tokens->buff[i]) == 0
 		&& ft_special_char(tokens->buff[i]) == 0)
 		i++;
@@ -26,10 +29,16 @@ void	ft_get_normal_string(struct s_tokens *tokens)
 	while (ft_isspace(tokens->buff[i]))
 		i++;
 	j = 0;
+	quote = '\0';
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
 		&& ft_special_char(tokens->buff[i + j]) == 0)
 	{
-		tokens->result[tokens->i][j] = tokens->buff[i + j];
+		if (quote == '\0' && (tokens->buff[i + j] == '\'' || tokens->buff[i + j] == '\"'))
+			quote = tokens->buff[i + j];
+		else if (quote == tokens->buff[i + j])
+			quote = '\0';
+		else
+			tokens->result[tokens->i][j] = tokens->buff[i + j];
 		j++;
 	}
 	tokens->result[tokens->i][j] = '\0';
@@ -112,10 +121,19 @@ void	ft_get_next_token(struct s_tokens *tokens)
 	while (ft_isspace(tokens->buff[i]))
 		i++;
 	if ((tokens->buff[i] == 34 || tokens->buff[i] == 39))
+	{
+		printf("quoted\n");
 		ft_get_quoted(tokens);
+	}
 	else if (tokens->buff[i] == '<' || tokens->buff[i] == '>'
 		|| tokens->buff[i] == '|' || tokens->buff[i] == '&')
+	{
+		printf("special\n");
 		ft_get_special_token(tokens);
+	}
 	else if (ft_isspace(tokens->buff[i]) == 0)
+	{
+		printf("normal\n");
 		ft_get_normal_string(tokens);
+	}
 }

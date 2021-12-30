@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 16:53:37 by iibanez-         ###   ########.fr       */
+/*   Updated: 2021/12/30 18:48:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <errno.h>
 #include <string.h>
 #include "../utils/utils.h"
+#include "../builtin/builtin.h"
+#include "../list/list.h"
 
 void	ft_die(char *e)
 {
@@ -55,131 +57,173 @@ char	*ft_search_dir(char **path, char *search)
 	return (NULL);
 }
 
-int	ft_execute_not_builtin(char *argv[], char **envp2)
+char	*ft_execute_not_builtin(char *argv[], char **envp2, char *n_input)
 {
-	int		link[2];
+	int		out[2];
+	int		in[2];
 	pid_t	pid;
-	char	foo[4096];
+	char	*buff;
 	char	*path;
 	int		nbytes;
 	char	**envp;
 
+	buff = malloc(sizeof(char) * 4096);
 	envp = ft_split(getenv("PATH"), ':');
 	path = ft_search_dir(envp, argv[0]);
-	if (pipe(link) == -1)
-		ft_die("pipe");
+	pipe(out);
+	pipe(in);
 	pid = fork();
-	if (pid == -1)
-		ft_die("fork");
 	if (pid == 0)
 	{
-		dup2 (link[1], STDOUT_FILENO);
-		close(link[0]);
-		close(link[1]);
+		if (n_input != NULL)
+		{
+			dup2 (in[0], STDIN_FILENO);
+			write(in[1], n_input, ft_strlen(n_input));
+		}
+		dup2 (out[1], STDOUT_FILENO);
+		close(out[0]);
+		close(out[1]);
+		close(in[0]);
+		close(in[1]);
 		execve(path, argv, envp2);
 		ft_die(argv[0]);
 	}
 	else
 	{
-		close(link[1]);
-		nbytes = read(link[0], foo, sizeof(foo));
-		printf("%.*s", nbytes, foo);
+		close(out[1]);
+		close(in[0]);
+		close(in[1]);
+		nbytes = read(out[0], buff, 4096);
+		buff[nbytes] = '\0';
 		wait(NULL);
+		return (buff);
 	}
-	return (0);
+	return (NULL);
 }
 
-void	ft_cd(char *argv[], char **envp)
+char	*ft_execute_aux(char *command[], char **envp, char *n_input)
 {
-	int	result;
-	
-	if (argv[1] == NULL)
-		result = chdir(getenv("HOME"));
-	else if (ft_strequals(argv[1], "~"))
-		result = chdir(getenv("HOME"));
+	if (ft_strequals(command[0], "echo"))
+		ft_echo(command, envp);
+	else if (ft_strequals(command[0], "cd"))
+		ft_cd(command, envp);
+	else if (ft_strequals(command[0], "pwd"))
+		ft_pwd(command, envp);
+	else if (ft_strequals(command[0], "export"))
+		printf("export\n");
+	else if (ft_strequals(command[0], "unset"))
+		printf("unset\n");
+	else if (ft_strequals(command[0], "env"))
+		ft_env(command, envp);
+	else if (ft_strequals(command[0], "exit"))
+		ft_exit();
 	else
-		result = chdir(argv[1]);
-	if (result == -1)
-		printf("-bash: cd: %s: %s\n", argv[1], strerror(errno));
+		return(ft_execute_not_builtin(command, envp, n_input));
+	return (NULL);
 }
 
-void 	ft_pwd(char *argv[], char **envp)
+typedef struct s_output
 {
-	char buff[2500];
+	int		redi;
+	int		pipe;
+	int		append;
+	char	*output;
+}	t_output;
 
-	printf("%s\n", getcwd(buff, 2500));
-}
-
-void	ft_env(char *argv[], char **envp)
+void	ft_check_output(char *command[], t_output *o)
 {
-	int	i;
-
-	while(envp[i])
+	int			i;
+	
+	i = 0;
+	o->redi = 0;
+	o->pipe = 0;
+	o->append = 0;
+	while (command[i])
 	{
-		printf("%s\n", envp[i]);
+		if (ft_strequals(command[i], ">") == 1)
+		{
+			o->redi = 1;
+			o->append = 0;
+			//crear archivo
+			if (o->output)
+				free(o->output);
+			o->output = ft_strcpy(command[i + 1]);
+			command[i][0] = '\0';
+			i++;
+			command[i][0]  = '\0';
+		}
+		if (ft_strequals(command[i], ">>") == 1)
+		{
+			o->redi = 1;
+			o->append = 1;
+			//crear archivo
+			if (o->output)
+				free(o->output);
+			o->output = ft_strcpy(command[i + 1]);
+			command[i][0]  = '\0';
+			i++;
+			command[i][0]  = '\0';
+		}
+		if (ft_strequals(command[i], "|"))
+		{
+			o->pipe = 1;
+			command[i][0] = '\0';
+		}
 		i++;
 	}
+	/*printf("redi->%i\n", o->redi);
+	printf("append->%i\n", o->append);
+	printf("pipe->%i\n", o->pipe);
+	printf("file->%s\n", o->output);*/
 }
 
-void	ft_exit()
-{
-	exit(EXIT_SUCCESS);
-}
-
-
-void	ft_echo(char *argv[], char **envp)
+t_list **ft_table_to_list(char **table[], t_list	**commands)
 {
 	int	i;
 	int	j;
-	int	start;
-	int	n;
 
 	i = 1;
-	start = 0;
-	n = 0;
-	while (argv[i] != NULL)
+	while (table[i] != NULL)
+		i++;
+	commands = malloc(sizeof(commands) * i);
+	i = 0;
+	while (table[i])
 	{
-		if (start == 1)
-			printf(" ");
-		if (start == 0 && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
+		j = 0;
+		while (table[i][j])
 		{
-			j = 1;
-			while(argv[i][j])
-			{
-				if (argv[i][j] != 'n')
-					start = 1;
-				j++;
-			}
-			if (start == 0 && ft_strlen(argv[i]) > 1)
-				n = 1;
+			if (j == 0)
+				commands[i] = ft_lstnew(table[i][j]);
+			else if (table[i][j] != NULL)
+				ft_lstadd_back(commands[i], ft_lstnew(table[i][j]));
+			j++;
 		}
-		else
-			start = 1;
-		if (start == 1)
-			printf("%s",argv[i]);
 		i++;
 	}
-	if (n == 0)
-		printf("\n");
+	commands[i] = NULL;
+	return (commands);
 }
 
-int ft_execute(char *argv[], char **envp)
+int ft_execute(char **table[], char **envp)
 {
-	if (ft_strequals(argv[0], "echo"))
-		ft_echo(argv, envp);
-	else if (ft_strequals(argv[0], "cd"))
-		ft_cd(argv, envp);
-	else if (ft_strequals(argv[0], "pwd"))
-		ft_pwd(argv, envp);
-	else if (ft_strequals(argv[0], "export"))
-		printf("export\n");
-	else if (ft_strequals(argv[0], "unset"))
-		printf("unset\n");
-	else if (ft_strequals(argv[0], "env"))
-		ft_env(argv, envp);
-	else if (ft_strequals(argv[0], "exit"))
-		ft_exit();
-	else
-		ft_execute_not_builtin(argv, envp);
+	int		i;
+	char	*last_output;
+	char	*next_input;
+	t_list	**commands;
+	t_output	o;
+	
+	i = 0;
+	next_input = NULL;
+	commands = ft_table_to_list(table, commands);
+	while (table[i] != NULL)
+	{
+		//ft_check_output(table[i], &o);
+
+		last_output = ft_execute_aux(table[i] , envp, NULL);
+		next_input = last_output;
+		i++;
+	}
+	if (last_output != NULL)
+		printf("%s",last_output);
 	return (0);
 }

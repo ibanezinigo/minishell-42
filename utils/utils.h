@@ -26,4 +26,7 @@ char	*ft_strcat(char *dst, char *src);
 int		ft_strcontainstext(char *str);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_isalnum(int c);
+int	    ft_parser_count_commands(char **src);
+char    *ft_getenv(char **env, char *path);
+
 #endif

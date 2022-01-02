@@ -19,31 +19,33 @@
 #include "../utils/utils.h"
 #include "../builtin/builtin.h"
 
-void	ft_cd(char *argv[], char **envp)
+
+void	ft_cd(t_list *command, char **envp)
 {
 	int	result;
 	
-	if (argv[1] == NULL)
-		result = chdir(getenv("HOME"));
-	else if (ft_strequals(argv[1], "~"))
-		result = chdir(getenv("HOME"));
+	if (command->next == NULL)
+		result = chdir(ft_getenv(envp, "HOME"));
+	else if (ft_strequals(command->next->token, "~"))
+		result = chdir(ft_getenv(envp, "HOME"));
 	else
-		result = chdir(argv[1]);
+		result = chdir(command->next->token);
 	if (result == -1)
-		printf("-bash: cd: %s: %s\n", argv[1], strerror(errno));
+		printf("-bash: cd: %s: %s\n", command->next->token, strerror(errno));
 }
 
-void 	ft_pwd(char *argv[], char **envp)
+void 	ft_pwd()
 {
 	char buff[2500];
 
 	printf("%s\n", getcwd(buff, 2500));
 }
 
-void	ft_env(char *argv[], char **envp)
+void	ft_env(char **envp)
 {
 	int	i;
 
+	i = 0;
 	while(envp[i])
 	{
 		printf("%s\n", envp[i]);
@@ -56,38 +58,37 @@ void	ft_exit()
 	exit(EXIT_SUCCESS);
 }
 
-
-void	ft_echo(char *argv[], char **envp)
+void	ft_echo(t_list *command)
 {
-	int	i;
 	int	j;
 	int	start;
 	int	n;
+	t_list	*tmp;
 
-	i = 1;
 	start = 0;
 	n = 0;
-	while (argv[i] != NULL)
+	tmp = command->next;
+	while (tmp != NULL)
 	{
 		if (start == 1)
 			printf(" ");
-		if (start == 0 && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
+		if (start == 0 && tmp->token[0] == '-' && ft_strlen(tmp->token) > 1)
 		{
 			j = 1;
-			while(argv[i][j])
+			while(tmp->token[j])
 			{
-				if (argv[i][j] != 'n')
+				if (tmp->token[j] != 'n')
 					start = 1;
 				j++;
 			}
-			if (start == 0 && ft_strlen(argv[i]) > 1)
+			if (start == 0 && ft_strlen(tmp->token) > 1)
 				n = 1;
 		}
 		else
 			start = 1;
 		if (start == 1)
-			printf("%s",argv[i]);
-		i++;
+			printf("%s", tmp->token);
+		tmp = tmp->next;
 	}
 	if (n == 0)
 		printf("\n");

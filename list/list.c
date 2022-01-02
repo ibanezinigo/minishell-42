@@ -65,3 +65,61 @@ void	ft_lstadd_back(t_list *last, t_list *new)
 	else
 		last = new;
 }
+
+t_list	*ft_del_node(t_list *start, int del)
+{
+	t_list	*last;
+	t_list	*act;
+	t_list	*next;
+	int	i;
+
+	i = 0;
+	last = NULL;
+	act = start;
+	next = act->next;
+	while(i < del)
+	{
+		last = act;
+		act = next;
+		next = next->next;
+		i++;
+	}
+	if (last == NULL)
+	{
+		free(start->token);
+		free(start);
+		return (next);
+	}
+	last->next = next;
+	free(act->token);
+	free(act);
+	return (start);
+}
+
+int	ft_node_position(t_list *start, t_list *find)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = start;
+	while (tmp != find)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
+}
+
+void	ft_print_list(t_list *start)
+{
+	t_list	*tmp;
+
+	tmp = start;
+	while (tmp)
+	{
+		if (tmp->token != NULL)
+			printf("-%s-\n", tmp->token);
+		tmp = tmp->next;
+	}
+}

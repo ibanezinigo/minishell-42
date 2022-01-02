@@ -42,7 +42,7 @@ void	ft_count_tokens_aux_advanced(char c, int *tokens, char lc, char q)
 	if ((c == '>' || c == '<') && (lc != '>' && lc != '<'))
 	{	
 		*tokens = *tokens + 1;
-		if (ft_isspace(lc) == 0 && !(lc == '>' || lc == '<'))
+		if (ft_isspace(lc) == 0 && (lc == '>' || lc == '<'))
 			*tokens = *tokens + 1;
 	}
 }

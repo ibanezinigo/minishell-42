@@ -12,9 +12,10 @@
 
 #ifndef BUILTIN_H
 #define BUILTIN_H
-void	ft_cd(char *argv[], char **envp);
-void 	ft_pwd(char *argv[], char **envp);
-void	ft_env(char *argv[], char **envp);
+#include "../list/list.h"
+void	ft_cd(t_list *command, char **envp);
+void 	ft_pwd();
+void	ft_env(char **envp);
 void	ft_exit();
-void	ft_echo(char *argv[], char **envp);
+void	ft_echo(t_list *command);
 #endif

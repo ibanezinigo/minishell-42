@@ -170,3 +170,43 @@ int	ft_isalnum(int c)
 		return (1);
 	return (0);
 }
+
+int	ft_parser_count_commands(char **src)
+{
+	int	i;
+	int	result;
+
+	result = 1;
+	i = 0;
+	while (src[i])
+	{
+		if (ft_strequals(src[i], "|"))
+			result++;
+		i++;
+	}
+	return (result);
+}
+
+char *ft_getenv(char **env, char *path)
+{
+	int		i;
+	int		j;
+	char	*value;
+
+	i = 0;
+	while (env[i])
+	{
+		value = env[i];
+		j = 0;
+		while (path[j])
+		{
+			if (value[j] != path[j])
+				break ;
+			j++;
+		}
+		if (value[j] == '=' && path[j] == '\0')
+			return (&value[j+1]);
+		i++;
+	}
+	return (NULL);
+}

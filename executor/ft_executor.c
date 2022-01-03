@@ -6,21 +6,22 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/30 18:48:34 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:46:04 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	ft_execute_fork(t_list *command, char **envp, t_execution *e)
+void	ft_execute_fork(t_list *command, t_execution *exe)
 {
 	char	*path;
 	char	*args[200];
 	t_list	*tmp;
 	int		i;
 
-	i = 0;
-	tmp = command;
+	i = 1;
+	tmp = command->next;
+	args[0] = command->token;
 	while (tmp)
 	{
 		args[i] = tmp->token;
@@ -28,90 +29,96 @@ void	ft_execute_fork(t_list *command, char **envp, t_execution *e)
 		i++;
 	}
 	args[i] = NULL;
-	path = ft_search_dir(ft_split(ft_getenv(envp,"PATH"), ':'), command->token);
-	if (e->output != NULL)
+	if (access(args[0], X_OK) == 0)
+		path = args[0];
+	else
+		path = ft_search_dir(ft_split(ft_getenv(exe->envp, "PATH"), ':'), command->token);
+	if (exe->input != NULL)
 	{
-		dup2 (e->in[0], STDIN_FILENO);
-		write(e->in[1], e->output, ft_strlen(e->output));
+		dup2 (exe->in[0], STDIN_FILENO);
+		write(exe->in[1], exe->input, ft_strlen(exe->input));
 	}
-	dup2 (e->out[1], STDOUT_FILENO);
-	close(e->out[0]);
-	close(e->out[1]);
-	close(e->in[0]);
-	close(e->in[1]);
-	execve(path, args, envp);
+	dup2 (exe->out[1], STDOUT_FILENO);
+	close(exe->out[0]);
+	close(exe->out[1]);
+	close(exe->in[0]);
+	close(exe->in[1]);
+	execve(path, args, exe->envp);
 	ft_die(args[0]);
 }
 
-char	*ft_execute_not_builtin(t_list *command, char **envp, t_execution *e)
+void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 {
 	pid_t	pid;
 	char	*buff;
 	int		nbytes;
 
 	buff = malloc(sizeof(char) * 4096);
-	pipe(e->out);
-	pipe(e->in);
+	pipe(exe->out);
+	pipe(exe->in);
 	pid = fork();
 	if (pid == 0)
-		ft_execute_fork(command, envp, e);
+		ft_execute_fork(command, exe);
 	else
 	{
-		close(e->out[1]);
-		close(e->in[0]);
-		close(e->in[1]);
-		
-		nbytes = read(e->out[0], buff, 4096);
-		buff[nbytes] = '\0';
+		close(exe->out[1]);
+		close(exe->in[0]);
+		close(exe->in[1]);
 		wait(NULL);
-		//close(e->out[0]);
-		
-		return (buff);
+		nbytes = read(exe->out[0], buff, 4096);
+		buff[nbytes] = '\0';
+		close(exe->out[0]);
+		exe->output = buff;
 	}
-	return (NULL);
 }
 
-char	*ft_execute_aux(t_list *command, char **envp, t_execution *o)
+void	ft_execute_aux(t_list *command, t_execution *exe)
 {
 	if (ft_strequals(command->token, "echo"))
-		ft_echo(command);
+		ft_echo(command, exe);
 	else if (ft_strequals(command->token, "cd"))
-		ft_cd(command, envp);
+		ft_cd(command, exe->envp);
 	else if (ft_strequals(command->token, "pwd"))
-		ft_pwd();
+		ft_pwd(exe);
 	else if (ft_strequals(command->token, "export"))
-		printf("export\n");
+		ft_export(command, exe);
 	else if (ft_strequals(command->token, "unset"))
 		printf("unset\n");
 	else if (ft_strequals(command->token, "env"))
-		ft_env(envp);
+		ft_env(exe);
 	else if (ft_strequals(command->token, "exit"))
 		ft_exit();
 	else
-		return (ft_execute_not_builtin(command, envp, o));
-	return (NULL);
+		ft_execute_not_builtin(command, exe);
 }
 
-int ft_execute(t_list **commands, char **envp)
+int	ft_execute(t_list **commands, char **envp, t_execution *exe)
 {
-	int		i;
-	char	*last_output;
-	char	*next_input;
-	t_execution	o;
-	
+	int			i;
+	char		*next_input;
+
 	i = 0;
-	next_input = NULL;
-	o.output = NULL;
+	exe->output = NULL;
+	exe->input = NULL;
+	exe->error = NULL;
 	while (commands[i] != NULL)
 	{
-		commands[i] = ft_check_output(commands[i], &o);
-		//ft_print_list(commands[i]);
-		last_output = ft_execute_aux(commands[i] , envp, &o);
-		//next_input = last_output;
+		commands[i] = ft_check_output(commands[i], exe);
+		commands[i] = ft_check_input(commands[i], exe);
+		if (!(exe->in_redi != -1 && exe->input == NULL))
+		{
+			ft_execute_aux(commands[i], exe);
+			ft_redirect_output(exe);
+		}
 		i++;
 	}
-	printf("OUTPUT->\n");
-	if (last_output != NULL)
-		printf("%s",last_output);
+	if (exe->redi == -1 && exe->output)
+	{
+		printf("%s", exe->output);
+	}
+	if (exe->error)
+	{
+		printf("%s", exe->error);
+	}
 	return (0);
 }

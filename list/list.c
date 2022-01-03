@@ -6,18 +6,15 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:48:28 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/30 18:45:41 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:02:28 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
-#include "../utils/utils.h"
-#include <stdio.h>
-#include <unistd.h>
 
 t_list	*ft_lstnew(char *content)
 {
-	t_list *rtn;
+	t_list	*rtn;
 
 	rtn = (t_list *)malloc(sizeof(t_list));
 	if (!rtn)
@@ -27,7 +24,7 @@ t_list	*ft_lstnew(char *content)
 	return (rtn);
 }
 
-int		ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	int		i;
 
@@ -42,20 +39,15 @@ int		ft_lstsize(t_list *lst)
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	if (lst == NULL)
-		return (0);
-	while (lst)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
+	if (lst)
+		while (lst->next)
+			lst = lst->next;
 	return (lst);
 }
 
 void	ft_lstadd_back(t_list *last, t_list *new)
 {
-	t_list *t;
+	t_list	*t;
 
 	if (last)
 	{
@@ -71,13 +63,13 @@ t_list	*ft_del_node(t_list *start, int del)
 	t_list	*last;
 	t_list	*act;
 	t_list	*next;
-	int	i;
+	int		i;
 
 	i = 0;
 	last = NULL;
 	act = start;
 	next = act->next;
-	while(i < del)
+	while (i < del)
 	{
 		last = act;
 		act = next;
@@ -110,7 +102,7 @@ int	ft_node_position(t_list *start, t_list *find)
 	}
 	return (i);
 }
-
+/*
 void	ft_print_list(t_list *start)
 {
 	t_list	*tmp;
@@ -123,3 +115,4 @@ void	ft_print_list(t_list *start)
 		tmp = tmp->next;
 	}
 }
+*/

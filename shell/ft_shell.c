@@ -6,13 +6,12 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/30 18:22:59 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:51:01 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lexer/lexer.h"
 #include "../executor/executor.h"
-#include <stdio.h>
 #include "../utils/utils.h"
 #include <unistd.h>
 #include "../list/list.h"
@@ -22,13 +21,15 @@
 
 int	main(int argc, char *argv[], char**envp)
 {
-	char	*readl;
-	char	**strlist;
-	t_list	**commands;
-	
+	char		*readl;
+	char		**strlist;
+	t_list		**commands;
+	t_execution	exe;
+
 	argc = 0;
 	argv = 0;
 	readl = readline("test> ");
+	exe.envp = envp;
 	while (1)
 	{
 		if (ft_strcontainstext(readl))
@@ -36,7 +37,7 @@ int	main(int argc, char *argv[], char**envp)
 			add_history(readl);
 			strlist = ft_lexer(readl);
 			commands = ft_table_to_list(strlist, commands);
-			ft_execute(commands, envp);
+			ft_execute(commands, envp, &exe);
 		}
 		readl = readline("test> ");
 	}

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 15:52:36 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:38:58 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_strlen(char *str)
 {
 	int	size;
 
+	if (!str)
+		return (0);
 	size = 0;
 	while (str[size])
 		size = size + 1;
@@ -121,13 +123,13 @@ char	*ft_strcat(char *dst, char *src)
 
 	result = malloc(sizeof(char) * (ft_strlen(dst) + ft_strlen(src) + 1));
 	i = 0;
-	while (dst[i])
+	while (dst && dst[i])
 	{
 		result[i] = dst[i];
 		i++;
 	}
 	j = 0;
-	while (src[j])
+	while (src && src[j])
 	{
 		result[i + j] = src[j];
 		j++;
@@ -187,7 +189,7 @@ int	ft_parser_count_commands(char **src)
 	return (result);
 }
 
-char *ft_getenv(char **env, char *path)
+char	*ft_getenv(char **env, char *path)
 {
 	int		i;
 	int		j;
@@ -205,8 +207,18 @@ char *ft_getenv(char **env, char *path)
 			j++;
 		}
 		if (value[j] == '=' && path[j] == '\0')
-			return (&value[j+1]);
+			return (&value[j + 1]);
 		i++;
 	}
 	return (NULL);
+}
+
+char *ft_append_tostr(char *str, char *str2)
+{
+	char *tmp;
+
+	tmp = ft_strcat(str, str2);
+	if (str)
+		free(str);
+	return (tmp);
 }

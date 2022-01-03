@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/30 09:47:26 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 14:44:22 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_isalnum(int c);
 int	    ft_parser_count_commands(char **src);
 char    *ft_getenv(char **env, char *path);
+char 	*ft_append_tostr(char *str, char *str2);
+
 
 #endif

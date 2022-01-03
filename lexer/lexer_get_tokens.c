@@ -6,12 +6,11 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 16:20:44 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:01:24 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
 
 void	ft_get_normal_string(struct s_tokens *tokens)
 {

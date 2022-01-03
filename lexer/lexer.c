@@ -6,12 +6,11 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 16:39:23 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:01:33 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
 
 void	ft_envars_extend(char *readl, char *result, int *i)
 {

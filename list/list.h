@@ -29,7 +29,7 @@ t_list	**ft_table_to_list(char *table[], t_list **commands);
 t_list	*ft_del_node(t_list *start, int del);
 int		ft_node_position(t_list *start, t_list *find);
 void	ft_print_list(t_list *start);
-
-
+char	**ft_listtotable(t_list *lst);
+char	*ft_getenv_value(t_list *env, char *str);
 
 #endif

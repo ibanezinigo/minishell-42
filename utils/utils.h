@@ -13,6 +13,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 # include <stdlib.h>
+# include "../list/list.h"
 
 void	ft_strcut_toend(char *str, int from);
 int		ft_strequals(char *str1, char *str2);
@@ -29,6 +30,7 @@ int		ft_isalnum(int c);
 int	    ft_parser_count_commands(char **src);
 char    *ft_getenv(char **env, char *path);
 char 	*ft_append_tostr(char *str, char *str2);
+
 
 
 #endif

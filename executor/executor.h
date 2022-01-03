@@ -34,12 +34,12 @@ typedef struct s_execution
 	char	*outputfile;
 	char	*output;
 	char	*input;
-	char	**envp;
 	char	*error;
+	t_list	**envp2;
 }	t_execution;
 
 char	*ft_search_dir(char **path, char *search);
-int		ft_execute(t_list **commands, char **envp, t_execution *e);
+int		ft_execute(t_list **commands, t_execution *e);
 t_list	*ft_delete_token(t_list *command, t_list *act, t_execution *o, int redi);
 t_list	*ft_check_output(t_list *command, t_execution *o);
 void	ft_redirect_output(t_execution *exe);
@@ -47,7 +47,7 @@ t_list	*ft_check_input(t_list *command, t_execution *o);
 
 void	ft_die(char *e);
 
-void	ft_cd(t_list *command, char **envp);
+void	ft_cd(t_list *command, t_execution *exe);
 void 	ft_pwd(t_execution *exe);
 void	ft_env(t_execution *exe);
 void	ft_exit();

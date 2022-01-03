@@ -102,17 +102,44 @@ int	ft_node_position(t_list *start, t_list *find)
 	}
 	return (i);
 }
-/*
-void	ft_print_list(t_list *start)
-{
-	t_list	*tmp;
 
-	tmp = start;
+char	**ft_listtotable(t_list *lst)
+{
+	char	**result;
+	t_list	*tmp;
+	int		i;
+
+	result = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	tmp = lst;
+	i = 0;
 	while (tmp)
 	{
-		if (tmp->token != NULL)
-			printf("-%s-\n", tmp->token);
+		result[i] = malloc(sizeof(char) * (ft_strlen(tmp->token) + 1));
+		result[i] = ft_strcpy(tmp->token);
+		tmp = tmp->next;
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
+}
+
+char	*ft_getenv_value(t_list *env, char *str)
+{
+	t_list	*tmp;
+	char	*result;
+	int		i;
+
+	tmp = env;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->token[i] == str[i])
+			i++;
+		if (str[i] == '\0' && tmp->token[i] == '=')
+		{
+			return (&tmp->token[i + 1]);
+		}
 		tmp = tmp->next;
 	}
+	return (NULL);
 }
-*/

@@ -28,8 +28,8 @@ int	main(int argc, char *argv[], char**envp)
 
 	argc = 0;
 	argv = 0;
+	exe.envp2 = ft_table_to_list(envp, exe.envp2);
 	readl = readline("test> ");
-	exe.envp = envp;
 	while (1)
 	{
 		if (ft_strcontainstext(readl))
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char**envp)
 			add_history(readl);
 			strlist = ft_lexer(readl);
 			commands = ft_table_to_list(strlist, commands);
-			ft_execute(commands, envp, &exe);
+			ft_execute(commands, &exe);
 		}
 		readl = readline("test> ");
 	}

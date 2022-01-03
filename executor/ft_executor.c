@@ -15,24 +15,15 @@
 void	ft_execute_fork(t_list *command, t_execution *exe)
 {
 	char	*path;
-	char	*args[200];
-	t_list	*tmp;
-	int		i;
+	char	**args;
+	char	**env;
 
-	i = 1;
-	tmp = command->next;
-	args[0] = command->token;
-	while (tmp)
-	{
-		args[i] = tmp->token;
-		tmp = tmp->next;
-		i++;
-	}
-	args[i] = NULL;
+	args = ft_listtotable(command);
+	env = ft_listtotable(exe->envp2[0]);
 	if (access(args[0], X_OK) == 0)
 		path = args[0];
 	else
-		path = ft_search_dir(ft_split(ft_getenv(exe->envp, "PATH"), ':'), command->token);
+		path = ft_search_dir(ft_split(ft_getenv(env, "PATH"), ':'), command->token);
 	if (exe->input != NULL)
 	{
 		dup2 (exe->in[0], STDIN_FILENO);
@@ -43,7 +34,7 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	close(exe->out[1]);
 	close(exe->in[0]);
 	close(exe->in[1]);
-	execve(path, args, exe->envp);
+	execve(path, args, env);
 	ft_die(args[0]);
 }
 
@@ -77,11 +68,11 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 	if (ft_strequals(command->token, "echo"))
 		ft_echo(command, exe);
 	else if (ft_strequals(command->token, "cd"))
-		ft_cd(command, exe->envp);
+		ft_cd(command, exe);
 	else if (ft_strequals(command->token, "pwd"))
 		ft_pwd(exe);
 	else if (ft_strequals(command->token, "export"))
-		ft_export(command, exe);
+		printf("export\n");
 	else if (ft_strequals(command->token, "unset"))
 		printf("unset\n");
 	else if (ft_strequals(command->token, "env"))
@@ -92,7 +83,7 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 		ft_execute_not_builtin(command, exe);
 }
 
-int	ft_execute(t_list **commands, char **envp, t_execution *exe)
+int	ft_execute(t_list **commands, t_execution *exe)
 {
 	int			i;
 	char		*next_input;

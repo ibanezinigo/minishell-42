@@ -12,10 +12,12 @@
 
 #include "executor.h"
 
-void	ft_cd(t_list *command, char **envp)
+void	ft_cd(t_list *command, t_execution *exe)
 {
-	int	result;
+	int		result;
+	char	**envp;
 
+	envp = ft_listtotable(exe->envp2[0]);
 	if (command->next == NULL)
 		result = chdir(ft_getenv(envp, "HOME"));
 	else if (ft_strequals(command->next->token, "~"))
@@ -38,19 +40,15 @@ void	ft_pwd(t_execution *exe)
 
 void	ft_env(t_execution *exe)
 {
-	int		i;
-	char	*tmp;
-	char	*tmp2;
+	t_list	*tmp;
 
-	i = 0;
-	while (exe->envp[i])
+	tmp = exe->envp2[0];
+	exe->output = malloc(1);
+	exe->output[0] = '\0';
+	while (tmp)
 	{
-		tmp = ft_strcat(exe->envp[i], "\n");
-		tmp2 = ft_strcat(tmp, exe->output);
-		free(tmp);
-		free(exe->output);
-		exe->output = tmp2;
-		i++;
+		exe->output = ft_append_tostr(exe->output, tmp->token);
+		exe->output = ft_append_tostr(exe->output, "\n");
 	}
 }
 
@@ -97,18 +95,15 @@ void	ft_echo(t_list *command, t_execution *exe)
 
 void	ft_export(t_list *command, t_execution *exe)
 {
-	char **tokens;
+	/*char **tokens;
 
 	tokens = ft_split(command->next->token, '=');
 	printf("%s\n", command->token);
 	printf("%s\n", command->next->token);
 	printf("%s\n", tokens[0]);
 	printf("%s\n", tokens[1]);
-	/*if (tokens[1])
+	if (tokens[1])
 	{
-		exe->envp = ft_append_tostr(exe->envp, tokens[0]);
-		exe->envp = ft_append_tostr(exe->envp, "=");
-		exe->envp = ft_append_tostr(exe->envp, tokens[1]);
-		exe->envp = ft_append_tostr(exe->envp, "\n");
+		ft_getenv(exe->envp, tokens[0]);
 	}*/
 }

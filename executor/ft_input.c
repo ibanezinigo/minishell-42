@@ -75,16 +75,15 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
-	path = ft_getenv(exe->envp, "PWD");
-	path = ft_strcat(path, "/");
-	path = ft_strcat(path, file);
+	path = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
+	path = ft_append_tostr(path, "/");
+	path = ft_append_tostr(path, file);
 	exe->input = ft_read_file(path);
 	if (exe->input == NULL)
 	{
 		exe->error = ft_append_tostr(exe->error,"-bash: ");
 		exe->error = ft_append_tostr(exe->error, file);
 		exe->error = ft_append_tostr(exe->error,": No such file or directory\n");
-		//printf("-bash: %s: No such file or directory\n", file);
 	}
 	free(file);
 	free(path);

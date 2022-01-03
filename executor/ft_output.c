@@ -16,7 +16,6 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe, int redi)
 {
 	int		i;
 	char	*path;
-	char	*path2;
 	char	*file;
 
 	exe->redi = redi;
@@ -24,10 +23,9 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe, int redi)
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
-	path = ft_getenv(exe->envp, "PWD");
-	path2 = ft_strcat(path, "/");
-	exe->outputfile = ft_strcat(path2, file);
-	free(path2);
+	exe->outputfile = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
+	exe->outputfile = ft_append_tostr(exe->outputfile, "/");
+	exe->outputfile = ft_append_tostr(exe->outputfile, file);
 	free(file);
 	if (redi == 1)
 		close(open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755));

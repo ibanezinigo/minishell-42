@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 13:13:17 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:45:14 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	char	*path;
 	char	**args;
 	char	**env;
+	int		wr;
 
 	args = ft_listtotable(command);
 	env = ft_listtotable(exe->envp2[0]);
@@ -26,15 +27,21 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 		path = ft_search_dir(ft_split(ft_getenv(env, "PATH"), ':'), command->token);
 	if (exe->input != NULL)
 	{
-		dup2 (exe->in[0], STDIN_FILENO);
-		write(exe->in[1], exe->input, ft_strlen(exe->input));
+		dup2(exe->in[0], STDIN_FILENO);
+		wr = write(exe->in[1], exe->input, 10000);
+		while (wr > 0)
+		{
+			ft_strcut_toend(exe->input, wr);
+			wr = write(exe->in[1], exe->input, 10000);
+		}
 	}
 	dup2 (exe->out[1], STDOUT_FILENO);
 	close(exe->out[0]);
 	close(exe->out[1]);
 	close(exe->in[0]);
 	close(exe->in[1]);
-	execve(path, args, env);
+	if (path)
+		execve(path, args, env);
 	ft_die(args[0]);
 }
 
@@ -52,14 +59,19 @@ void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 		ft_execute_fork(command, exe);
 	else
 	{
+		wait(NULL);
 		close(exe->out[1]);
 		close(exe->in[0]);
 		close(exe->in[1]);
-		wait(NULL);
-		nbytes = read(exe->out[0], buff, 4096);
+		nbytes = read(exe->out[0], buff, 4095);
 		buff[nbytes] = '\0';
+		while (nbytes > 0)
+		{
+			exe->output = ft_append_tostr(exe->output, buff);
+			nbytes = read(exe->out[0], buff, 4095);
+			buff[nbytes] = '\0';
+		}
 		close(exe->out[0]);
-		exe->output = buff;
 	}
 }
 

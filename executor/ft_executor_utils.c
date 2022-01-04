@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:42:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 17:57:31 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:12:27 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_search_dir(char **path, char *search)
 	char			*tmp;
 	char			*result;
 
+	if (!path)
+		return (NULL);
 	while (*path)
 	{
 		dp = opendir(*path);

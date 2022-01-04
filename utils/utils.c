@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 14:06:46 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:26:05 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ int	ft_isspace(char c)
 
 int	ft_special_char(char c)
 {
-	if (c == '<' || c == '>' || c == '|' || c == '&')
+	if (c == '<' || c == '>' || c == '|' || c == '&' || c == ';')
 		return (1);
 	return (0);
 }
 
+#include <stdio.h>
 //Devuelve el tamaño de un string
 int	ft_strlen(char *str)
 {

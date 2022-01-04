@@ -1,0 +1,6 @@
+cd '\etc' -> pwd -> me lleva a private etc
+cd - -> te lleca al ultimo dir -> NO ES NECESARIO
+___________
+Comandos en mayusculas -> minusculas
+~ = $HOME
+echo $USER $123456789USER $USER123456789 -> variables que empiezan con numero se saltan el $ y el numero

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 14:15:28 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:47:31 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+/*
 int	main(int argc, char *argv[], char**envp)
 {
 	char		*readl;
@@ -40,12 +41,13 @@ int	main(int argc, char *argv[], char**envp)
 			ft_execute(commands, &exe);
 		}
 		else
-			printf("-bash: quotes not closed.\n");		
+			printf("-bash: quotes not closed.\n");	
+	}	
 	return (0);
 }
+*/
 
 
-/*
 int	main(int argc, char *argv[], char**envp)
 {
 	char		*readl;
@@ -56,22 +58,21 @@ int	main(int argc, char *argv[], char**envp)
 	argc = 0;
 	argv = 0;
 	exe.envp2 = ft_table_to_list(envp, exe.envp2);
-	readl = readline("test> ");
+	readl = readline("microshell> ");
 	while (1)
 	{
 		if (ft_strcontainstext(readl))
 		{
 			add_history(readl);
-			if (ft_isvalidquotes(readl))
+			if (ft_isvalidquotes(readl) && ft_forbidden_char(readl))
 			{
 				strlist = ft_lexer(readl);
 				commands = ft_table_to_list(strlist, commands);
-				ft_execute(commands, &exe);
-			}
-			else
-				printf("-bash: quotes not closed.\n");		
+				if (ft_command_checker(commands))
+					ft_execute(commands, &exe);
+			}	
 		}
-		readl = readline("test> ");
+		readl = readline("microshell> ");
 	}
 	return (0);
-}*/
+}

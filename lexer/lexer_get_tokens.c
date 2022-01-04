@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 18:01:24 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:08:13 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	ft_get_quoted(struct s_tokens *tokens)
 		j++;
 	}
 	tokens->result[tokens->i][j] = '\0';
-	ft_strcut_toend(tokens->buff, i + j + 1);
+	if (tokens->buff[i + j] == '\0')
+		tokens->buff[0] = '\0';
+	else
+		ft_strcut_toend(tokens->buff, i + j + 1);
 }
 
 void	ft_get_special_token(struct s_tokens *tokens)

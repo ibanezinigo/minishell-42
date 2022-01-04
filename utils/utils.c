@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 17:38:58 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:06:46 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,4 +221,20 @@ char *ft_append_tostr(char *str, char *str2)
 	if (str)
 		free(str);
 	return (tmp);
+}
+
+int	ft_strstartwith(char *s1, char *s2)
+{
+	int	i;
+
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }

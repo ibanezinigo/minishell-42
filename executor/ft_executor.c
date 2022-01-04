@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 19:46:04 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:13:17 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 	else if (ft_strequals(command->token, "pwd"))
 		ft_pwd(exe);
 	else if (ft_strequals(command->token, "export"))
-		printf("export\n");
+		ft_export(command, exe);
 	else if (ft_strequals(command->token, "unset"))
-		printf("unset\n");
+		ft_unset(command, exe);
 	else if (ft_strequals(command->token, "env"))
 		ft_env(exe);
 	else if (ft_strequals(command->token, "exit"))

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:48:28 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 18:02:28 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:26:51 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*ft_lstnew(char *content)
 	if (!rtn)
 		return (rtn = NULL);
 	rtn->next = NULL;
-	rtn->token = content;
+	rtn->token = ft_strcpy(content);
 	return (rtn);
 }
 
@@ -95,12 +95,15 @@ int	ft_node_position(t_list *start, t_list *find)
 
 	i = 0;
 	tmp = start;
-	while (tmp != find)
+	while (tmp && tmp != find)
 	{
 		tmp = tmp->next;
 		i++;
 	}
-	return (i);
+	if (tmp == find)
+		return (i);
+	else
+		return (-1);
 }
 
 char	**ft_listtotable(t_list *lst)

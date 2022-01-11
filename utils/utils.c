@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 11:42:37 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:19:14 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*ft_strcpy(char *src)
 	char	*dest;
 	int		i;
 
+	if (!src)
+		return (NULL);
 	dest = malloc(sizeof(char) * (ft_strlen(src) + 1));
 	i = 0;
 	while (src[i])

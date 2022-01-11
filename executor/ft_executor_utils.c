@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:42:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:40:17 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:59:17 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,4 @@ char	*ft_search_dir(char **path, char *search)
 		path++;
 	}
 	return (NULL);
-}
-
-void	ft_die(char *e)
-{
-	fprintf(stderr, "bash: %s: command not found\n", e);
-	exit(127);
 }

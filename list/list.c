@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:48:28 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 13:17:54 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:31:11 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ char	**ft_listtotable(t_list *lst)
 char	*ft_getenv_value(t_list *env, char *str)
 {
 	t_list	*tmp;
-	char	*result;
 	int		i;
 
 	tmp = env;

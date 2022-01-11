@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:52:35 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 15:49:28 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:30:01 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe, int redi)
 {
 	int		i;
-	char	*path;
 	char	*file;
 
 	if (exe->redi == 1 || exe->redi == 2)
@@ -85,7 +84,7 @@ void	ft_redirect_output(t_execution *exe)
 	{
 		if (exe->redi == 1)
 			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755);
-		else if (exe->redi == 2)
+		else
 			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_APPEND, 0755);
 		write(fd, exe->output, ft_strlen(exe->output));
 		free(exe->output);

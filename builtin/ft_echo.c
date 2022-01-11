@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:28:48 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 11:15:42 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:28:52 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_echo_arguments(int *start, t_list *tmp, int *n)
 
 void	ft_echo(t_list *command, t_execution *exe)
 {
-	int		j;
 	int		start;
 	int		n;
 	t_list	*tmp;

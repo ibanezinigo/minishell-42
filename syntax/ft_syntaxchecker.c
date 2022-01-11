@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 10:58:03 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:30:59 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	ft_forbiden_redirection(char *str)
 int	ft_command_checker(t_list **commands)
 {
 	t_list	*act;
-	t_list	*next;
 	int		i;
 
 	i = 0;

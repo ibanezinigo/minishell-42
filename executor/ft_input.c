@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:12:40 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:30:14 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 {
 	int		i;
-	int		size;
 	char	*path;
 	char	*file;
 

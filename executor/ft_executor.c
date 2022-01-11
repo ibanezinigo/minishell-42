@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:58:05 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:44:39 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 
 	g_errno = 0;
 	args = ft_listtotable(command);
+	ft_str_to_lower(args[0]);
 	if (access(args[0], X_OK) == 0)
 		path = ft_strcpy(args[0]);
 	else
@@ -82,6 +83,7 @@ void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 
 void	ft_execute_aux(t_list *command, t_execution *exe)
 {
+	ft_str_to_lower(command->token);
 	if (ft_strequals(command->token, "echo"))
 		ft_echo(command, exe);
 	else if (ft_strequals(command->token, "cd"))

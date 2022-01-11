@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:23:29 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:42:15 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
+void	ft_str_to_lower(char *str);
 #endif

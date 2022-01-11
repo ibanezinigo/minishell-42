@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:29:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 13:29:57 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 12:35:35 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ft_env(t_execution *exe)
 		exe->output = ft_append_tostr(exe->output, "\n");
 		tmp = tmp->next;
 	}
+	g_errno = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:18:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2021/12/29 11:56:52 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:59:29 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_free_list(char **list)
 {
 	int	i;
 
+	if (!list)
+		return ;
 	i = 0;
 	while (list[i])
 	{

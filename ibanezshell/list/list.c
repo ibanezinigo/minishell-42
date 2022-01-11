@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:48:28 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/05 16:15:18 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 13:17:54 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char	**ft_listtotable(t_list *lst)
 	i = 0;
 	while (tmp)
 	{
-		result[i] = malloc(sizeof(char) * (ft_strlen(tmp->token) + 1));
 		result[i] = ft_strcpy(tmp->token);
 		tmp = tmp->next;
 		i++;

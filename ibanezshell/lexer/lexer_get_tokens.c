@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 14:08:13 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:14:40 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	ft_get_normal_string(struct s_tokens *tokens)
 	int		quote;
 
 	i = 0;
-	//Ignora espacios del inicio
-	while (tokens->buff[i] != '\0') //&& ft_isspace(tokens->buff[i]) == 0 && ft_special_char(tokens->buff[i]) == 0
+	while (tokens->buff[i] != '\0')
 		i++;
 	tokens->result[tokens->i] = malloc(sizeof(char) * (i + 1));
 	i = 0;
@@ -31,7 +30,8 @@ void	ft_get_normal_string(struct s_tokens *tokens)
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
 		&& ft_special_char(tokens->buff[i + j]) == 0)
 	{
-		if (quote == '\0' && (tokens->buff[i + j] == '\'' || tokens->buff[i + j] == '\"'))
+		if (quote == '\0' && (tokens->buff[i + j] == '\''
+				|| tokens->buff[i + j] == '\"'))
 		{
 			quote = tokens->buff[i + j];
 			i++;
@@ -90,8 +90,21 @@ void	ft_get_quoted(struct s_tokens *tokens)
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
 		&& ft_special_char(tokens->buff[i + j]) == 0)
 	{
-		tokens->result[tokens->i][j] = tokens->buff[i + j];
-		j++;
+		if (tokens->buff[i + j] == quote)
+		{
+			quote = '\0';
+			i++;
+		}
+		else if (tokens->buff[i + j] == '"' || tokens->buff[i + j] == '\'')
+		{
+			quote = tokens->buff[i + j];
+			i++;
+		}
+		else
+		{
+			tokens->result[tokens->i][j] = tokens->buff[i + j];
+			j++;
+		}
 	}
 	tokens->result[tokens->i][j] = '\0';
 	if (tokens->buff[i + j] == '\0')

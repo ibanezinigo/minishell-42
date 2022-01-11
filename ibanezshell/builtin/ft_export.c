@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:18:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 12:05:13 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 12:52:12 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_change_env(t_execution *exe, char *search, char *new)
 	newvar = ft_append_tostr(newvar, "=");
 	newvar = ft_append_tostr(newvar, new);
 	tmp = ft_lstnew(newvar);
+	free(newvar);
 	ft_lstadd_back(exe->envp2[0], tmp);
 }
 
@@ -50,24 +51,16 @@ void	ft_export(t_list *command, t_execution *exe)
 {
 	char	**var;
 
+	g_errno = 0;
 	if (command->next == NULL || command->next->token == NULL)
 		return ;
 	var = ft_split(command->next->token, '=');
 	if (ft_isdigit(var[0][0]) == 1)
-	{
 		ft_export_error(command, exe, var[0]);
-		return ;
-	}
 	else if (ft_strisalnum(var[0]) == 0)
-	{
 		ft_export_error(command, exe, var[0]);
-		return ;
-	}
 	else if (var[1])
-	{
 		ft_change_env(exe, var[0], var[1]);
-	}
 	ft_free_list(var);
-	g_errno = 0;
 	return ;
 }

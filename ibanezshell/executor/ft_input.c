@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 19:27:07 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:12:40 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_read_file(char	*path)
 	int		size;
 	char	buff[1000];
 	char	*result;
-	char	*tmp;
 
 	fd = open(path, O_RDONLY);
 	size = read(fd, buff, 999);
@@ -44,6 +43,8 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 	char	*input;
 	char	*result;
 
+	if (exe->in_redi == 1 || exe->in_redi == 2)
+		free(exe->input);
 	exe->in_redi = redi;
 	end = ft_strcpy(act->next->token);
 	i = ft_node_position(command, act);
@@ -56,8 +57,10 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 	{
 		result = ft_append_tostr(result, input);
 		result = ft_append_tostr(result, "\n");
+		free(input);
 		input = readline("> ");
 	}
+	free(input);
 	exe->input = result;
 	free(end);
 	return (command);
@@ -70,6 +73,8 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	char	*path;
 	char	*file;
 
+	if (exe->in_redi == 1 || exe->in_redi == 2)
+		free(exe->input);
 	exe->in_redi = redi;
 	file = ft_strcpy(act->next->token);
 	i = ft_node_position(command, act);
@@ -81,9 +86,10 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	exe->input = ft_read_file(path);
 	if (exe->input == NULL)
 	{
-		exe->error = ft_append_tostr(exe->error,"-bash: ");
+		exe->error = ft_append_tostr(exe->error, "-bash: ");
 		exe->error = ft_append_tostr(exe->error, file);
-		exe->error = ft_append_tostr(exe->error,": No such file or directory\n");
+		exe->error = ft_append_tostr(exe->error, ": No such file or directory\n");
+		g_errno = 1;
 	}
 	free(file);
 	free(path);

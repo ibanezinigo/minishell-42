@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:39:49 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 13:36:45 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:12:18 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 
 char	*ft_search_dir(char **path, char *search);
 int		ft_execute(t_list **commands, t_execution *e);
-t_list	*ft_delete_token(t_list *command, t_list *act, t_execution *o, int redi);
+t_list	*ft_delete_token(t_list *command,
+			t_list *act, t_execution *o, int redi);
 t_list	*ft_check_output(t_list *command, t_execution *o);
 void	ft_redirect_output(t_execution *exe);
 t_list	*ft_check_input(t_list *command, t_execution *o);

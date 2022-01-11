@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:30:31 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:58:05 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,6 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	exit(127);
 }
 
-void	ft_read_execve(t_execution *exe)
-{
-	int		nbytes;
-	char	*buff;
-
-	buff = malloc(sizeof(char) * 4096);
-	nbytes = 1;
-	while (nbytes > 0)
-	{
-		nbytes = read(exe->out[0], buff, 4095);
-		buff[nbytes] = '\0';
-		if (g_errno != 0)
-			exe->error = ft_append_tostr(exe->error, buff);
-		else
-			exe->output = ft_append_tostr(exe->output, buff);
-	}
-	free(buff);
-}
-
 void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 {
 	pid_t	pid;
@@ -121,22 +102,6 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 	{
 		free(exe->input);
 		exe->input = NULL;
-	}
-}
-
-void	ft_print_output(t_execution *exe)
-{
-	if (exe->redi == -1 && exe->output)
-	{
-		printf("%s", exe->output);
-		free(exe->output);
-		exe->output = NULL;
-	}
-	if (exe->error)
-	{
-		printf("%s", exe->error);
-		free(exe->error);
-		exe->error = NULL;
 	}
 }
 

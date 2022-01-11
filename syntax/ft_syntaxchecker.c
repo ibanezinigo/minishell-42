@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:30:59 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 18:21:48 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	ft_forbidden_char(char *str)
 			quote = str[i];
 		else if (str[i] == quote)
 			quote = '\0';
-		if (quote == '\0' && (str[i] == ';' || str[i] == '&' || str[i] == '*' || str[i] == '\\'))
+		if (quote == '\0' && (str[i] == ';' || str[i] == '&'
+				|| str[i] == '*' || str[i] == '\\'))
 		{
 			printf("-bash: %c not supported.\n", str[i]);
 			return (0);
@@ -77,6 +78,27 @@ int	ft_forbiden_redirection(char *str)
 	return (1);
 }
 
+int	ft_check_error(t_list *act, t_list **commands, int *i)
+{
+	if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<")
+		|| ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
+	{
+		if (!act->next)
+		{
+			printf("-bash: syntax error near unexpected token `newline'\n");
+			return (0);
+		}
+		else if (ft_forbiden_redirection(act->next->token))
+			return (0);
+	}
+	if (ft_strequals(act->token, "|") && commands[*i + 1] == NULL)
+	{
+		printf("-bash: syntax error near unexpected token `|'\n");
+		return (0);
+	}
+	return (1);
+}
+
 int	ft_command_checker(t_list **commands)
 {
 	t_list	*act;
@@ -88,21 +110,8 @@ int	ft_command_checker(t_list **commands)
 		act = commands[i];
 		while (act)
 		{
-			if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<") || ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
-			{
-				if (!act->next)
-				{
-					printf("-bash: syntax error near unexpected token `newline'\n");
-					return (0);
-				}
-				else if (ft_forbiden_redirection(act->next->token))
-					return (0);
-			}
-			if (ft_strequals(act->token, "|") && commands[i + 1] == NULL)
-			{
-				printf("-bash: syntax error near unexpected token `|'\n");
+			if (ft_check_error(act, commands, &i) == 0)
 				return (0);
-			}
 			act = act->next;
 		}
 		i++;

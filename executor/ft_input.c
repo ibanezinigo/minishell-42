@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:30:14 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:57:07 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
 	input = readline("> ");
-	result = malloc(1);
-	result[0] = '\0';
+	result = NULL;
 	while (ft_strequals(end, input) == 0)
 	{
 		result = ft_append_tostr(result, input);
@@ -80,14 +79,14 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
 	path = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
-	path = ft_append_tostr(path, "/");
-	path = ft_append_tostr(path, file);
+	path = ft_append_tostr(ft_append_tostr(path, "/"), file);
 	exe->input = ft_read_file(path);
 	if (exe->input == NULL)
 	{
 		exe->error = ft_append_tostr(exe->error, "-bash: ");
 		exe->error = ft_append_tostr(exe->error, file);
-		exe->error = ft_append_tostr(exe->error, ": No such file or directory\n");
+		exe->error = ft_append_tostr(exe->error,
+				": No such file or directory\n");
 		g_errno = 1;
 	}
 	free(file);
@@ -95,17 +94,22 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	return (command);
 }
 
-t_list	*ft_check_input(t_list *command, t_execution *exe)
+void	ft_clean_input(t_execution *exe)
 {
-	t_list		*act;
-	t_list		*next;
-
 	if (exe->redi != 0 && exe->input)
 	{
 		free(exe->input);
 		exe->input = NULL;
 	}
 	exe->in_redi = -1;
+}
+
+t_list	*ft_check_input(t_list *command, t_execution *exe)
+{
+	t_list		*act;
+	t_list		*next;
+
+	ft_clean_input(exe);
 	act = command;
 	while (act)
 	{

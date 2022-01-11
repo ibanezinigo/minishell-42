@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:16:19 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 18:15:42 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,23 @@ void	ft_freecharlist(char **l)
 	free(l);
 }
 
+void	ft_execute_line(char *readl, t_execution *exe)
+{
+	char		**strlist;
+	t_list		**commands;
+
+	commands = NULL;
+	strlist = ft_lexer(readl, exe->envp2[0]);
+	commands = ft_table_to_list(strlist, commands);
+	if (ft_command_checker(commands))
+		ft_execute(commands, exe);
+	ft_freelist(commands);
+	ft_freecharlist(strlist);
+}
+
 int	main(int argc, char *argv[], char**envp)
 {
 	char		*readl;
-	char		**strlist;
-	t_list		**commands;
 	t_execution	exe;
 
 	argc = 0;
@@ -65,14 +77,7 @@ int	main(int argc, char *argv[], char**envp)
 		{
 			add_history(readl);
 			if (ft_isvalidquotes(readl) && ft_forbidden_char(readl))
-			{
-				strlist = ft_lexer(readl, exe.envp2[0]);
-				commands = ft_table_to_list(strlist, commands);
-				if (ft_command_checker(commands))
-					ft_execute(commands, &exe);
-				ft_freelist(commands);
-				ft_freecharlist(strlist);
-			}
+				ft_execute_line(readl, &exe);
 		}
 		free(readl);
 	}

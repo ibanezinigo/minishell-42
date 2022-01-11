@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 18:13:25 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:17:11 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	main(int argc, char *argv[], char**envp)
 		}
 		free(readl);
 	}
-	//rl_clear_history();
 	ft_freelist(exe.envp2);
-	//exit(0);
 	return (0);
 }

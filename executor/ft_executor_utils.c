@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:42:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 19:12:27 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:16:07 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*ft_search_dir(char **path, char *search)
 			}
 			dirp = readdir(dp);
 		}
+		closedir(dp);
 		path++;
 	}
-	closedir(dp);
 	return (NULL);
 }
 

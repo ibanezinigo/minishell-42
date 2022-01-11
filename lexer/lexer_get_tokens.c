@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 14:08:13 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:48:00 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,21 @@ void	ft_get_quoted(struct s_tokens *tokens)
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
 		&& ft_special_char(tokens->buff[i + j]) == 0)
 	{
-		tokens->result[tokens->i][j] = tokens->buff[i + j];
-		j++;
+		if (tokens->buff[i + j] == quote)
+		{
+			quote = '\0';
+			i++;
+		}
+		else if (tokens->buff[i + j] == '"' || tokens->buff[i + j] == '\'')
+		{
+			quote = tokens->buff[i + j];
+			i++;
+		}
+		else
+		{
+			tokens->result[tokens->i][j] = tokens->buff[i + j];
+			j++;
+		}
 	}
 	tokens->result[tokens->i][j] = '\0';
 	if (tokens->buff[i + j] == '\0')

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 19:27:07 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:38:58 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 		exe->error = ft_append_tostr(exe->error,"-bash: ");
 		exe->error = ft_append_tostr(exe->error, file);
 		exe->error = ft_append_tostr(exe->error,": No such file or directory\n");
+		g_errno = 1;
 	}
 	free(file);
 	free(path);

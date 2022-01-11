@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 19:42:01 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 14:53:11 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,37 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	char	**env;
 	int		wr;
 
+	g_errno = 0;
 	args = ft_listtotable(command);
-	env = ft_listtotable(exe->envp2[0]);
 	if (access(args[0], X_OK) == 0)
-		path = args[0];
+		path = ft_strcpy(args[0]);
 	else
-		path = ft_search_dir(ft_split(ft_getenv(exe->envp2[0], "PATH"), ':'), command->token);
-	if (exe->input != NULL)
 	{
-		dup2(exe->in[0], STDIN_FILENO);
-		wr = write(exe->in[1], exe->input, ft_strlen(exe->input));
+		env = ft_split(ft_getenv(exe->envp2[0], "PATH"), ':');
+		path = ft_search_dir(env, command->token);
+		ft_free_list(env);
 	}
-	dup2 (exe->out[1], STDOUT_FILENO);
-	close(exe->out[0]);
-	close(exe->out[1]);
-	close(exe->in[0]);
-	close(exe->in[1]);
-	if (path)
-		execve(path, args, env);
-	ft_die(args[0]);
+	if (path != NULL)
+	{
+		env = ft_listtotable(exe->envp2[0]);
+		if (exe->input != NULL)
+		{
+			dup2(exe->in[0], STDIN_FILENO);
+			wr = write(exe->in[1], exe->input, ft_strlen(exe->input));
+		}
+		dup2 (exe->out[1], STDOUT_FILENO);
+		close(exe->out[0]);
+		close(exe->out[1]);
+		close(exe->in[0]);
+		close(exe->in[1]);
+		if (path)
+			execve(path, args, env);
+		ft_free_list(env);
+		free(path);
+	}
+	ft_free_list(args);
+	exit(127);
+	//ft_die(args[0]);
 }
 
 void	ft_execute_not_builtin(t_list *command, t_execution *exe)
@@ -99,6 +111,22 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 	}
 }
 
+void	ft_print_output(t_execution *exe)
+{
+	if (exe->redi == -1 && exe->output)
+	{
+		printf("%s", exe->output);
+		free(exe->output);
+		exe->output = NULL;
+	}
+	if (exe->error)
+	{
+		printf("%s", exe->error);
+		free(exe->error);
+		exe->error = NULL;
+	}
+}
+
 int	ft_execute(t_list **commands, t_execution *exe)
 {
 	int			i;
@@ -118,19 +146,10 @@ int	ft_execute(t_list **commands, t_execution *exe)
 			ft_execute_aux(commands[i], exe);
 			ft_redirect_output(exe);
 		}
+		if (exe->redi == 1 || exe->redi == 2)
+			free(exe->outputfile);
 		i++;
 	}
-	if (exe->redi == -1 && exe->output)
-	{
-		printf("%s", exe->output);
-		free(exe->output);
-		exe->output = NULL;
-	}
-	if (exe->error)
-	{
-		printf("%s", exe->error);
-		free(exe->error);
-		exe->error = NULL;
-	}
+	ft_print_output(exe);
 	return (0);
 }

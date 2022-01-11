@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:22:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 13:23:48 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/10 17:41:40 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,6 @@ typedef struct s_execution
 	char	*error;
 	t_list	**envp2;
 }	t_execution;
+
+int	g_errno;
 #endif

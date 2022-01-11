@@ -6,13 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/05 15:02:35 by ingonzal         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:29:06 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	ft_envars_extend(char *readl, char *result, int *i)
+void	ft_envars_extend(char *readl, char *result, int *i, t_list *envp)
 {
 	int		j;
 	int		size;
@@ -21,7 +21,7 @@ void	ft_envars_extend(char *readl, char *result, int *i)
 
 	j = 0;
 	*i = *i + 1;
-	while (readl[*i] && ft_isalnum(readl[*i]) == 1)
+	while (readl[*i] && (ft_isalnum(readl[*i]) == 1 || readl[*i] == '?'))
 	{
 		envvar[j] = readl[*i];
 		j++;
@@ -35,7 +35,10 @@ void	ft_envars_extend(char *readl, char *result, int *i)
 		result[size + 1] = '\0';
 		return;
 	}
-	env = getenv(envvar);
+	if (ft_strequals(envvar, "?"))
+		env = ft_itoa(g_errno);
+	else
+		env = ft_strcpy(ft_getenv(envp, envvar));
 	j = 0;
 	while (env && env[j])
 	{
@@ -44,9 +47,10 @@ void	ft_envars_extend(char *readl, char *result, int *i)
 		result[size + 1] = '\0';
 		j++;
 	}
+	free(env);
 }
 
-char	*ft_envars(char *readl, char *res)
+char	*ft_envars(char *readl, char *res, t_list *envp)
 {
 	int		i;
 	int		size;
@@ -61,7 +65,7 @@ char	*ft_envars(char *readl, char *res)
 		size = ft_strlen(result);
 		if (readl[i] == '$' && quote != '\'')
 		{
-			ft_envars_extend(readl, result, &i);
+			ft_envars_extend(readl, result, &i, envp);
 		}
 		else
 		{
@@ -79,13 +83,14 @@ char	*ft_envars(char *readl, char *res)
 }
 
 //Separa un string en tokens
-char	**ft_lexer(char *readl)
+char	**ft_lexer(char *readl, t_list *envp)
 {
 	struct s_tokens	tokens;
 
-	tokens.buff = ft_envars(readl, tokens.buff);
+	tokens.buff = ft_envars(readl, tokens.buff, envp);
+	
 	tokens.n_tokens = ft_count_tokens(tokens.buff);
-	tokens.result = malloc(sizeof(char **) * (tokens.n_tokens + 1));
+	tokens.result = malloc(sizeof(char *) * (tokens.n_tokens + 1));
 	tokens.i = 0;
 	while (tokens.i < tokens.n_tokens)
 	{
@@ -93,5 +98,6 @@ char	**ft_lexer(char *readl)
 		tokens.i = tokens.i + 1;
 	}
 	tokens.result[tokens.i] = NULL;
+	free(tokens.buff);
 	return (tokens.result);
 }

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/05 11:56:48 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:42:37 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,20 @@ int	ft_isalnum(int c)
 	return (0);
 }
 
+int	ft_strisalnum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_parser_count_commands(char **src)
 {
 	int	i;
@@ -192,16 +206,16 @@ int	ft_parser_count_commands(char **src)
 	return (result);
 }
 
-char	*ft_getenv(char **env, char *path)
+char	*ft_getenv(t_list *l, char *path)
 {
-	int		i;
 	int		j;
 	char	*value;
+	t_list	*next;
 
-	i = 0;
-	while (env[i])
+	next = l;
+	while (next)
 	{
-		value = env[i];
+		value = next->token;
 		j = 0;
 		while (path[j])
 		{
@@ -211,7 +225,7 @@ char	*ft_getenv(char **env, char *path)
 		}
 		if (value[j] == '=' && path[j] == '\0')
 			return (&value[j + 1]);
-		i++;
+		next = next->next;
 	}
 	return (NULL);
 }
@@ -221,8 +235,7 @@ char *ft_append_tostr(char *str, char *str2)
 	char *tmp;
 
 	tmp = ft_strcat(str, str2);
-	if (str)
-		free(str);
+	free(str);
 	return (tmp);
 }
 
@@ -240,4 +253,30 @@ int	ft_strstartwith(char *s1, char *s2)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_atoi(const char *str)
+{
+	long	i;
+	long	nbr;
+	int		isneg;
+
+	i = 0;
+	nbr = 0;
+	isneg = 0;
+	while (str[i] != '\0' && (str[i] == 32 || str[i] == '\t' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] != '\0' && str[i] == '-')
+	{
+		isneg = 1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i] != '\0' && ft_isdigit(str[i]))
+		nbr = (nbr * 10) + (str[i++] - '0');
+	if (isneg == 1)
+		return (-nbr);
+	return (nbr);
 }

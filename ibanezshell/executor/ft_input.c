@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 20:26:13 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:27:07 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ t_list	*ft_check_input(t_list *command, t_execution *exe)
 	t_list		*act;
 	t_list		*next;
 
+	if (exe->redi != 0 && exe->input)
+	{
+		free(exe->input);
+		exe->input = NULL;
+	}
 	exe->in_redi = -1;
 	act = command;
 	while (act)

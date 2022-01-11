@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:52:35 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 18:11:49 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/10 19:26:08 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ t_list	*ft_check_output(t_list *command, t_execution *o)
 			command = ft_set_output(command, act, o, 2);
 			act = next;
 		}
-		else if (ft_strequals(act->token, "|") && o->redi == -1)
+		else if (ft_strequals(act->token, "|"))
 		{
-			o->redi = 0;
+			if (o->redi == -1)
+				o->redi = 0;
 			next = act->next;
 			command = ft_del_node(command, ft_node_position(command, act));
 			act = next;
@@ -74,7 +75,8 @@ void	ft_redirect_output(t_execution *exe)
 
 	if (exe->redi == 0)
 	{
-		exe->input = exe->output;
+		exe->input = ft_strcpy(exe->output);
+		free(exe->output);
 		exe->output = NULL;
 	}
 	else if (exe->redi == 1 || exe->redi == 2)
@@ -84,6 +86,8 @@ void	ft_redirect_output(t_execution *exe)
 		else if (exe->redi == 2)
 			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_APPEND, 0755);
 		write(fd, exe->output, ft_strlen(exe->output));
+		free(exe->output);
+		free(exe->input);
 		close (fd);
 		exe->input = NULL;
 		exe->output = NULL;

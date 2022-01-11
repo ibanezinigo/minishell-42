@@ -6,24 +6,18 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 14:17:11 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:16:19 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lexer/lexer.h"
 #include "../executor/executor.h"
-//#include "../utils/utils.h"
 #include "../syntax/syntax.h"
-//#include <unistd.h>
 #include "../list/list.h"
-//#include "../parser/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-//#include <signal.h>
 
-
-
-void ft_freelist(t_list **l)
+void	ft_freelist(t_list **l)
 {
 	int		i;
 	t_list	*tmp;
@@ -33,13 +27,13 @@ void ft_freelist(t_list **l)
 	{
 		tmp = l[i];
 		while (tmp)
-			tmp = ft_del_node(tmp,0);
+			tmp = ft_del_node(tmp, 0);
 		i++;
 	}
 	free(l);
 }
 
-void ft_freecharlist(char **l)
+void	ft_freecharlist(char **l)
 {
 	int		i;
 

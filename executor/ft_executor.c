@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 14:53:11 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:40:12 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 		free(path);
 	}
 	ft_free_list(args);
-	exit(127);
-	//ft_die(args[0]);
+	ft_die(args[0]);
 }
 
 void	ft_execute_not_builtin(t_list *command, t_execution *exe)

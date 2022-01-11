@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 18:29:06 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:14:07 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_envars_extend(char *readl, char *result, int *i, t_list *envp)
 		size = ft_strlen(result);
 		result[size] = '$';
 		result[size + 1] = '\0';
-		return;
+		return ;
 	}
 	if (ft_strequals(envvar, "?"))
 		env = ft_itoa(g_errno);
@@ -88,7 +88,6 @@ char	**ft_lexer(char *readl, t_list *envp)
 	struct s_tokens	tokens;
 
 	tokens.buff = ft_envars(readl, tokens.buff, envp);
-	
 	tokens.n_tokens = ft_count_tokens(tokens.buff);
 	tokens.result = malloc(sizeof(char *) * (tokens.n_tokens + 1));
 	tokens.i = 0;

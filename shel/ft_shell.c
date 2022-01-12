@@ -6,20 +6,20 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 19:32:29 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:46:56 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lexer/lexer.h"
-#include "../executor/executor.h"
-#include "../syntax/syntax.h"
-#include "../list/list.h"
+#include "lexer.h"
+#include "executor.h"
+#include "syntax.h"
+#include "list.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
 #include <termios.h>
 
-void	sig_handler(int	signum)
+void	sig_handler(int signum)
 {
 	if (signum == 2 && g_global.pid == 0)
 	{

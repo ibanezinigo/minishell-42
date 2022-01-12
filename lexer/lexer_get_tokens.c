@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_get_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 19:27:54 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:23:49 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_get_quoted(struct s_tokens *tokens)
 	while (quote != '\0')
 		ft_get_quoted_2(tokens, &i, &j, &quote);
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
-		&& ft_special_char(tokens->buff[i + j]) == 0)
+		&& (ft_special_char(tokens->buff[i + j]) && quote == '\0') == 0)
 		ft_get_quotedaux(tokens, &i, &j, &quote);
 	tokens->result[tokens->i][j] = '\0';
 	if (tokens->buff[i + j] == '\0')

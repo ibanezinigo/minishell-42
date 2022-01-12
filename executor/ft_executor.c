@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 19:29:02 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:30:13 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int	ft_execute(t_list **commands, t_execution *exe)
 		{
 			if (commands[i] != NULL)
 			{
-			ft_execute_aux(commands[i], exe);
-			ft_redirect_output(exe);
+				ft_execute_aux(commands[i], exe);
+				ft_redirect_output(exe);
 			}
 		}
 		if (exe->redi == 1 || exe->redi == 2)

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:19:02 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:10:31 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:17:25 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-# include "../define/definitions.h"
-# include "../utils/utils.h"
-# include "../list/list.h"
+# include "definitions.h"
+# include "utils.h"
+# include "list.h"
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>

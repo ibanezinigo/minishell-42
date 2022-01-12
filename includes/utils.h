@@ -6,15 +6,15 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 13:13:51 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:17:11 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 # include <stdlib.h>
-# include "../define/definitions.h"
-# include "../list/list.h"
+# include "definitions.h"
+# include "list.h"
 
 void	ft_strcut_toend(char *str, int from);
 int		ft_strequals(char *str1, char *str2);

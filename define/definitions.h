@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:22:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/10 17:41:40 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct s_list
 {
 	char			*token;
 	struct s_list	*next;
+	int				quoted;
 }	t_list;
 
 typedef struct s_execution
@@ -32,5 +33,11 @@ typedef struct s_execution
 	t_list	**envp2;
 }	t_execution;
 
-int	g_errno;
+typedef struct s_global
+{
+	int	errnor;
+	int	pid;
+}	t_global;
+
+t_global g_global;
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:18:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:28:30 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:29:23 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_export_error(t_execution *exe, char *err)
 	exe->error = ft_append_tostr(exe->error, "bash: export: `");
 	exe->error = ft_append_tostr(exe->error, err);
 	exe->error = ft_append_tostr(exe->error, "': not a valid identifier\n");
-	g_errno = 1;
+	g_global.errnor = 1;
 }
 
 /*DEFINIR MENSAJES DE ERROR*/
@@ -51,7 +51,7 @@ void	ft_export(t_list *command, t_execution *exe)
 {
 	char	**var;
 
-	g_errno = 0;
+	g_global.errnor = 0;
 	if (command->next == NULL || command->next->token == NULL)
 		return ;
 	var = ft_split(command->next->token, '=');

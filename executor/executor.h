@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:39:49 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:58:17 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:44:03 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../syntax/syntax.h"
 
 char	*ft_search_dir(char **path, char *search);
 int		ft_execute(t_list **commands, t_execution *e);

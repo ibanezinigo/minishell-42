@@ -1,0 +1,32 @@
+{
+	"files.associations": {
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"array": "c",
+		"bitset": "c",
+		"initializer_list": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"unordered_map": "c",
+		"utility": "c",
+		"vector": "c",
+		"istream": "c",
+		"sstream": "c",
+		"__bit_reference": "c",
+		"algorithm": "c",
+		"chrono": "c",
+		"unistd.h": "c",
+		"utils.h": "c",
+		"__locale": "c",
+		"ios": "c",
+		"locale": "c",
+		"__mutex_base": "c",
+		"ostream": "c",
+		"history.h": "c",
+		"lexer.h": "c",
+		"dirent.h": "c",
+		"readline.h": "c",
+		"definitions.h": "c"
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:42:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:58:10 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,24 @@ char	*ft_search_dir(char **path, char *search)
 	struct dirent	*dirp;
 	char			*result;
 
-	if (!path)
-		return (NULL);
 	while (*path)
 	{
 		dp = opendir(*path);
-		dirp = readdir(dp);
-		while (dirp != NULL)
+		if (dp != NULL)
 		{
-			if (ft_strequals(search, dirp->d_name))
-			{
-				result = ft_read_dir(*path, dirp);
-				closedir(dp);
-				return (result);
-			}
 			dirp = readdir(dp);
+			while (dirp != NULL)
+			{
+				if (ft_strequals(search, dirp->d_name))
+				{
+					result = ft_read_dir(*path, dirp);
+					closedir(dp);
+					return (result);
+				}
+				dirp = readdir(dp);
+			}
+			closedir(dp);
 		}
-		closedir(dp);
 		path++;
 	}
 	return (NULL);
@@ -78,7 +79,7 @@ void	ft_read_execve(t_execution *exe)
 	{
 		nbytes = read(exe->out[0], buff, 4095);
 		buff[nbytes] = '\0';
-		if (g_errno != 0)
+		if (g_global.errnor != 0)
 			exe->error = ft_append_tostr(exe->error, buff);
 		else
 			exe->output = ft_append_tostr(exe->output, buff);

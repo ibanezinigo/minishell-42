@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:28:48 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:28:52 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:32 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void	ft_echo(t_list *command, t_execution *exe)
 	}
 	if (n == 0)
 		exe->output = ft_append_tostr(exe->output, "\n");
-	g_errno = 0;
+	g_global.errnor = 0;
 }

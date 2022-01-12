@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:15:42 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:32:29 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,24 @@
 #include "../list/list.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+#include <termios.h>
 
-void	ft_freelist(t_list **l)
+void	sig_handler(int	signum)
 {
-	int		i;
-	t_list	*tmp;
-
-	i = 0;
-	while (l[i])
+	if (signum == 2 && g_global.pid == 0)
 	{
-		tmp = l[i];
-		while (tmp)
-			tmp = ft_del_node(tmp, 0);
-		i++;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	free(l);
-}
-
-void	ft_freecharlist(char **l)
-{
-	int		i;
-
-	i = 0;
-	while (l[i])
+	if (signum == 2 && g_global.pid != 0)
+		printf("\n");
+	if (signum == 3 && g_global.pid != 0)
 	{
-		free(l[i]);
-		i++;
+		printf("Quit: 3\n");
 	}
-	free(l);
 }
 
 void	ft_execute_line(char *readl, t_execution *exe)
@@ -62,12 +52,16 @@ void	ft_execute_line(char *readl, t_execution *exe)
 
 int	main(int argc, char *argv[], char**envp)
 {
-	char		*readl;
-	t_execution	exe;
+	char					*readl;
+	t_execution				exe;
 
 	argc = 0;
 	argv = 0;
+	g_global.pid = 0;
 	exe.envp2 = ft_table_to_list(envp, exe.envp2);
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	while (1)
 	{
 		readl = readline("microshell> ");

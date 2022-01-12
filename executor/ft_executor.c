@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 19:44:39 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:29:02 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	char	**args;
 	char	**env;
 
-	g_errno = 0;
+	path = NULL;
 	args = ft_listtotable(command);
 	ft_str_to_lower(args[0]);
 	if (access(args[0], X_OK) == 0)
@@ -48,7 +48,8 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	else
 	{
 		env = ft_split(ft_getenv(exe->envp2[0], "PATH"), ':');
-		path = ft_search_dir(env, command->token);
+		if (env != NULL)
+			path = ft_search_dir(env, command->token);
 		ft_free_list(env);
 	}
 	if (path != NULL)
@@ -71,11 +72,12 @@ void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 		ft_execute_fork(command, exe);
 	else
 	{
+		g_global.pid = pid;
 		close(exe->out[1]);
 		close(exe->in[0]);
 		close(exe->in[1]);
 		wait(&pid);
-		g_errno = WEXITSTATUS(pid);
+		g_global.errnor = WEXITSTATUS(pid);
 		ft_read_execve(exe);
 		close(exe->out[0]);
 	}
@@ -109,7 +111,7 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 
 int	ft_execute(t_list **commands, t_execution *exe)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	exe->output = NULL;
@@ -122,8 +124,11 @@ int	ft_execute(t_list **commands, t_execution *exe)
 		commands[i] = ft_check_output(commands[i], exe);
 		if (!(exe->in_redi != -1 && exe->input == NULL))
 		{
+			if (commands[i] != NULL)
+			{
 			ft_execute_aux(commands[i], exe);
 			ft_redirect_output(exe);
+			}
 		}
 		if (exe->redi == 1 || exe->redi == 2)
 			free(exe->outputfile);

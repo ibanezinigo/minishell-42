@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 11:40:01 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:42:15 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ int		ft_strcontainstext(char *str);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_isalnum(int c);
 int		ft_strisalnum(char *str);
-int	    ft_parser_count_commands(char **src);
+int		ft_parser_count_commands(char **src);
 char	*ft_getenv(t_list *l, char *path);
-char 	*ft_append_tostr(char *str, char *str2);
+char	*ft_append_tostr(char *str, char *str2);
 int		ft_strstartwith(char *s1, char *s2);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
-
-
+void	ft_str_to_lower(char *str);
 #endif

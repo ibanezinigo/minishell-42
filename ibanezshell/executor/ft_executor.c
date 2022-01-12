@@ -6,21 +6,43 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:40:12 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:44:39 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+void	ft_execve(t_execution *exe, char *path, char **args)
+{
+	char	**env;
+	int		wr;
+
+	env = ft_listtotable(exe->envp2[0]);
+	if (exe->input != NULL)
+	{
+		dup2(exe->in[0], STDIN_FILENO);
+		wr = write(exe->in[1], exe->input, ft_strlen(exe->input));
+	}
+	dup2 (exe->out[1], STDOUT_FILENO);
+	close(exe->out[0]);
+	close(exe->out[1]);
+	close(exe->in[0]);
+	close(exe->in[1]);
+	if (path)
+		execve(path, args, env);
+	ft_free_list(env);
+	free(path);
+}
 
 void	ft_execute_fork(t_list *command, t_execution *exe)
 {
 	char	*path;
 	char	**args;
 	char	**env;
-	int		wr;
 
 	g_errno = 0;
 	args = ft_listtotable(command);
+	ft_str_to_lower(args[0]);
 	if (access(args[0], X_OK) == 0)
 		path = ft_strcpy(args[0]);
 	else
@@ -30,34 +52,18 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 		ft_free_list(env);
 	}
 	if (path != NULL)
-	{
-		env = ft_listtotable(exe->envp2[0]);
-		if (exe->input != NULL)
-		{
-			dup2(exe->in[0], STDIN_FILENO);
-			wr = write(exe->in[1], exe->input, ft_strlen(exe->input));
-		}
-		dup2 (exe->out[1], STDOUT_FILENO);
-		close(exe->out[0]);
-		close(exe->out[1]);
-		close(exe->in[0]);
-		close(exe->in[1]);
-		if (path)
-			execve(path, args, env);
-		ft_free_list(env);
-		free(path);
-	}
+		ft_execve(exe, path, args);
+	write(exe->out[1], "bash: ", 6);
+	write(exe->out[1], args[0], ft_strlen(args[0]));
+	write(exe->out[1], ": command not found\n", 20);
 	ft_free_list(args);
-	ft_die(args[0]);
+	exit(127);
 }
 
 void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 {
 	pid_t	pid;
-	char	*buff;
-	int		nbytes;
 
-	buff = malloc(sizeof(char) * 4096);
 	pipe(exe->out);
 	pipe(exe->in);
 	pid = fork();
@@ -70,23 +76,14 @@ void	ft_execute_not_builtin(t_list *command, t_execution *exe)
 		close(exe->in[1]);
 		wait(&pid);
 		g_errno = WEXITSTATUS(pid);
-		nbytes = read(exe->out[0], buff, 4095);
-		buff[nbytes] = '\0';
-		exe->output = malloc(1);
-		exe->output[0] = '\0';
-		while (nbytes > 0)
-		{
-			exe->output = ft_append_tostr(exe->output, buff);
-			nbytes = read(exe->out[0], buff, 4095);
-			buff[nbytes] = '\0';
-		}
+		ft_read_execve(exe);
 		close(exe->out[0]);
 	}
-	free(buff);
 }
 
 void	ft_execute_aux(t_list *command, t_execution *exe)
 {
+	ft_str_to_lower(command->token);
 	if (ft_strequals(command->token, "echo"))
 		ft_echo(command, exe);
 	else if (ft_strequals(command->token, "cd"))
@@ -110,26 +107,9 @@ void	ft_execute_aux(t_list *command, t_execution *exe)
 	}
 }
 
-void	ft_print_output(t_execution *exe)
-{
-	if (exe->redi == -1 && exe->output)
-	{
-		printf("%s", exe->output);
-		free(exe->output);
-		exe->output = NULL;
-	}
-	if (exe->error)
-	{
-		printf("%s", exe->error);
-		free(exe->error);
-		exe->error = NULL;
-	}
-}
-
 int	ft_execute(t_list **commands, t_execution *exe)
 {
 	int			i;
-	char		*next_input;
 
 	i = 0;
 	exe->output = NULL;

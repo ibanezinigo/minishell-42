@@ -6,21 +6,23 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:52:35 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 15:49:28 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:47:39 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe, int redi)
+t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 {
 	int		i;
-	char	*path;
 	char	*file;
 
 	if (exe->redi == 1 || exe->redi == 2)
 		free(exe->outputfile);
-	exe->redi = redi;
+	if (ft_strequals(act->token, ">"))
+		exe->redi = 1;
+	else
+		exe->redi = 2;
 	file = ft_strcpy(act->next->token);
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
@@ -29,9 +31,9 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe, int redi)
 	exe->outputfile = ft_append_tostr(exe->outputfile, "/");
 	exe->outputfile = ft_append_tostr(exe->outputfile, file);
 	free(file);
-	if (redi == 1)
+	if (exe->redi == 1)
 		close(open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755));
-	else if (redi == 2)
+	else if (exe->redi == 2)
 		close(open(exe->outputfile, O_RDWR | O_CREAT | O_APPEND, 0755));
 	return (command);
 }
@@ -45,16 +47,10 @@ t_list	*ft_check_output(t_list *command, t_execution *exe)
 	act = command;
 	while (act)
 	{
-		if (ft_strequals(act->token, ">"))
+		if (ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
 		{
 			next = act->next->next;
-			command = ft_set_output(command, act, exe, 1);
-			act = next;
-		}		
-		else if (ft_strequals(act->token, ">>"))
-		{
-			next = act->next->next;
-			command = ft_set_output(command, act, exe, 2);
+			command = ft_set_output(command, act, exe);
 			act = next;
 		}
 		else if (ft_strequals(act->token, "|"))
@@ -85,7 +81,7 @@ void	ft_redirect_output(t_execution *exe)
 	{
 		if (exe->redi == 1)
 			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755);
-		else if (exe->redi == 2)
+		else
 			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_APPEND, 0755);
 		write(fd, exe->output, ft_strlen(exe->output));
 		free(exe->output);

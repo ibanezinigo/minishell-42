@@ -6,17 +6,37 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:14:07 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:18:46 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+void	ft_envar_extend_aux(char *envvar, t_list *envp, char *result)
+{
+	char	*env;
+	int		j;
+	int		size;
+
+	if (ft_strequals(envvar, "?"))
+		env = ft_itoa(g_errno);
+	else
+		env = ft_strcpy(ft_getenv(envp, envvar));
+	j = 0;
+	while (env && env[j])
+	{
+		size = ft_strlen(result);
+		result[size] = env[j];
+		result[size + 1] = '\0';
+		j++;
+	}
+	free(env);
+}
+
 void	ft_envars_extend(char *readl, char *result, int *i, t_list *envp)
 {
 	int		j;
 	int		size;
-	char	*env;
 	char	envvar[2500];
 
 	j = 0;
@@ -35,22 +55,10 @@ void	ft_envars_extend(char *readl, char *result, int *i, t_list *envp)
 		result[size + 1] = '\0';
 		return ;
 	}
-	if (ft_strequals(envvar, "?"))
-		env = ft_itoa(g_errno);
-	else
-		env = ft_strcpy(ft_getenv(envp, envvar));
-	j = 0;
-	while (env && env[j])
-	{
-		size = ft_strlen(result);
-		result[size] = env[j];
-		result[size + 1] = '\0';
-		j++;
-	}
-	free(env);
+	ft_envar_extend_aux(envvar, envp, result);
 }
 
-char	*ft_envars(char *readl, char *res, t_list *envp)
+char	*ft_envars(char *readl, t_list *envp)
 {
 	int		i;
 	int		size;
@@ -64,9 +72,7 @@ char	*ft_envars(char *readl, char *res, t_list *envp)
 	{
 		size = ft_strlen(result);
 		if (readl[i] == '$' && quote != '\'')
-		{
 			ft_envars_extend(readl, result, &i, envp);
-		}
 		else
 		{
 			result[size] = readl[i];
@@ -78,8 +84,7 @@ char	*ft_envars(char *readl, char *res, t_list *envp)
 		else if (readl[i] == quote)
 			quote = '\0';
 	}
-	res = ft_strcpy(result);
-	return (res);
+	return (ft_strcpy(result));
 }
 
 //Separa un string en tokens
@@ -87,7 +92,7 @@ char	**ft_lexer(char *readl, t_list *envp)
 {
 	struct s_tokens	tokens;
 
-	tokens.buff = ft_envars(readl, tokens.buff, envp);
+	tokens.buff = ft_envars(readl, envp);
 	tokens.n_tokens = ft_count_tokens(tokens.buff);
 	tokens.result = malloc(sizeof(char *) * (tokens.n_tokens + 1));
 	tokens.i = 0;

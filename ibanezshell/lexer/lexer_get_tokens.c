@@ -6,50 +6,11 @@
 /*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 20:10:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 16:14:40 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:27:54 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-void	ft_get_normal_string(struct s_tokens *tokens)
-{
-	int		i;
-	int		j;
-	int		quote;
-
-	i = 0;
-	while (tokens->buff[i] != '\0')
-		i++;
-	tokens->result[tokens->i] = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (ft_isspace(tokens->buff[i]))
-		i++;
-	j = 0;
-	quote = '\0';
-	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
-		&& ft_special_char(tokens->buff[i + j]) == 0)
-	{
-		if (quote == '\0' && (tokens->buff[i + j] == '\''
-				|| tokens->buff[i + j] == '\"'))
-		{
-			quote = tokens->buff[i + j];
-			i++;
-		}
-		else if (quote == tokens->buff[i + j])
-		{
-			quote = '\0';
-			i++;
-		}
-		else
-		{
-			tokens->result[tokens->i][j] = tokens->buff[i + j];
-			j++;
-		}
-	}
-	tokens->result[tokens->i][j] = '\0';
-	ft_strcut_toend(tokens->buff, i + j);
-}
 
 void	ft_get_quoted_2(struct s_tokens *tokens, int *i, int *j, char *quote)
 {
@@ -67,6 +28,25 @@ void	ft_get_quoted_2(struct s_tokens *tokens, int *i, int *j, char *quote)
 	{
 		*quote = tokens->buff[*i + *j + 1];
 		*i = *i + 2;
+	}
+}
+
+void	ft_get_quotedaux(struct s_tokens *tokens, int *i, int *j, char *quote)
+{
+	if (tokens->buff[*i + *j] == *quote)
+	{
+		*quote = '\0';
+		*i = *i + 1;
+	}
+	else if (tokens->buff[*i + *j] == '"' || tokens->buff[*i + *j] == '\'')
+	{
+		*quote = tokens->buff[*i + *j];
+		*i = *i + 1;
+	}
+	else
+	{
+		tokens->result[tokens->i][*j] = tokens->buff[*i + *j];
+		*j = *j + 1;
 	}
 }
 
@@ -89,23 +69,7 @@ void	ft_get_quoted(struct s_tokens *tokens)
 		ft_get_quoted_2(tokens, &i, &j, &quote);
 	while (tokens->buff[i + j] != '\0' && ft_isspace(tokens->buff[i + j]) == 0
 		&& ft_special_char(tokens->buff[i + j]) == 0)
-	{
-		if (tokens->buff[i + j] == quote)
-		{
-			quote = '\0';
-			i++;
-		}
-		else if (tokens->buff[i + j] == '"' || tokens->buff[i + j] == '\'')
-		{
-			quote = tokens->buff[i + j];
-			i++;
-		}
-		else
-		{
-			tokens->result[tokens->i][j] = tokens->buff[i + j];
-			j++;
-		}
-	}
+		ft_get_quotedaux(tokens, &i, &j, &quote);
 	tokens->result[tokens->i][j] = '\0';
 	if (tokens->buff[i + j] == '\0')
 		tokens->buff[0] = '\0';

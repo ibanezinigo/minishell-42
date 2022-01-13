@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_syntaxchecker.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:21:48 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:55:12 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int	ft_forbidden_char(char *str)
 
 int	ft_forbiden_redirection(char *str)
 {
-	if (ft_strstartwith(str, "<<<"))
-		printf("-bash: syntax error near unexpected token `<<<'\n");
-	else if (ft_strstartwith(str, "<<"))
+	if (ft_strstartwith(str, "<<"))
 		printf("-bash: syntax error near unexpected token `<<'\n");
 	else if (ft_strstartwith(str, "<"))
 		printf("-bash: syntax error near unexpected token `<'\n");
@@ -78,7 +76,7 @@ int	ft_forbiden_redirection(char *str)
 	return (1);
 }
 
-int	ft_check_error(t_list *act, t_list **commands, int *i)
+int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 {
 	if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<")
 		|| ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
@@ -91,7 +89,7 @@ int	ft_check_error(t_list *act, t_list **commands, int *i)
 		else if (ft_forbiden_redirection(act->next->token))
 			return (0);
 	}
-	if (ft_strequals(act->token, "|") && commands[*i + 1] == NULL)
+	if (ft_strequals(act->token, "|") && (commands[*i + 1] == NULL || last == NULL))
 	{
 		printf("-bash: syntax error near unexpected token `|'\n");
 		return (0);
@@ -102,16 +100,19 @@ int	ft_check_error(t_list *act, t_list **commands, int *i)
 int	ft_command_checker(t_list **commands)
 {
 	t_list	*act;
+	t_list	*last;
 	int		i;
 
 	i = 0;
 	while (commands[i])
 	{
 		act = commands[i];
+		last = NULL;
 		while (act)
 		{
-			if (ft_check_error(act, commands, &i) == 0)
+			if (ft_check_error(act, last, commands, &i) == 0)
 				return (0);
+			last = act;
 			act = act->next;
 		}
 		i++;

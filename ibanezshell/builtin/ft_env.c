@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:29:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 12:35:35 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:32 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	ft_env(t_execution *exe)
 		exe->output = ft_append_tostr(exe->output, "\n");
 		tmp = tmp->next;
 	}
-	g_errno = 0;
+	g_global.errnor = 0;
 }

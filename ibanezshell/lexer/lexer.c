@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 19:18:46 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:36 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_envar_extend_aux(char *envvar, t_list *envp, char *result)
 	int		size;
 
 	if (ft_strequals(envvar, "?"))
-		env = ft_itoa(g_errno);
+		env = ft_itoa(g_global.errnor);
 	else
 		env = ft_strcpy(ft_getenv(envp, envvar));
 	j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 19:42:15 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 13:13:51 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ char	*ft_itoa(int n);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 void	ft_str_to_lower(char *str);
+void	ft_freelist(t_list **l);
+void	ft_freecharlist(char **l);
 #endif

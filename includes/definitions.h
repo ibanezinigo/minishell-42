@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:22:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 20:30:33 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/13 15:50:12 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef struct s_list
 {
 	char			*token;
 	struct s_list	*next;
-	int				quoted;
 }	t_list;
 
 typedef struct s_execution

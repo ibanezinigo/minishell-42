@@ -34,7 +34,7 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib 
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib  -fsanitize=address -g3
 
 %.o: %.c
 		@${CC} ${CFLAGS} -I ~/.brew/opt/readline/include -I /System/Volumes/Data/sgoinfre/goinfre/Perso/iibanez-/Cursus/3/minishell2/includes -c $< -o $@
@@ -45,6 +45,8 @@ clean:
 fclean:
 	@rm -f $(OBJ)
 	@rm -f $(NAME)
+
+re: fclean all
 
 sanitize:
 	gcc ./shell/ft_shell.c ./parser/ft_parser.c ./utils/*.c ./list/*.c  ./syntax/*.c ./lexer/*.c ./executor/*.c ./builtin/*.c  -o minishell -lreadline  -fsanitize=address -g3 -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include

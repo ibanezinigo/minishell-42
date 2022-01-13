@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:49:12 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 21:47:15 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/13 11:23:50 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ char	**ft_lexer(char *readl, t_list *envp);
 void	ft_get_next_token(struct s_tokens *tokens);
 int		ft_count_tokens(char *str);
 void	ft_get_normal_string(struct s_tokens *tokens);
-
+t_list	*ft_lexer_2(char *readl);
 #endif

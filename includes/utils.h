@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 21:17:11 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/13 13:34:19 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_strisalnum(char *str);
 int		ft_parser_count_commands(char **src);
 char	*ft_getenv(t_list *l, char *path);
 char	*ft_append_tostr(char *str, char *str2);
+char    *ft_append_ctostr(char *str, char c);
 int		ft_strstartwith(char *s1, char *s2);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);

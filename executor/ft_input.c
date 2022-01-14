@@ -6,36 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:24:59 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 19:28:35 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:38:33 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-char	*ft_read_file(char	*path)
-{
-	int		fd;
-	int		size;
-	char	buff[1000];
-	char	*result;
-
-	fd = open(path, O_RDONLY);
-	size = read(fd, buff, 999);
-	if (size == -1)
-		return (NULL);
-	buff[size] = '\0';
-	result = malloc(1);
-	result[0] = 0;
-	while (size > 0)
-	{
-		result = ft_append_tostr(result, buff);
-		size = read(fd, buff, 999);
-		buff[size] = '\0';
-	}
-	close(fd);
-	return (result);
-}
-
+//USADO
 t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 {
 	int		i;
@@ -44,7 +21,7 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 	char	*result;
 
 	if (exe->in_redi == 1 || exe->in_redi == 2)
-		free(exe->input);
+		free(exe->inputfile);
 	exe->in_redi = redi;
 	end = ft_strcpy(act->next->token);
 	i = ft_node_position(command, act);
@@ -60,11 +37,12 @@ t_list	*ft_doc_here(t_list *command, t_list *act, t_execution *exe, int redi)
 		input = readline("> ");
 	}
 	free(input);
-	exe->input = result;
+	exe->inputfile = result;
 	free(end);
 	return (command);
 }
 
+//USADO
 t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 {
 	int		i;
@@ -72,7 +50,7 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	char	*file;
 
 	if (exe->in_redi == 1 || exe->in_redi == 2)
-		free(exe->input);
+		free(exe->inputfile);
 	exe->in_redi = redi;
 	file = ft_strcpy(act->next->token);
 	i = ft_node_position(command, act);
@@ -80,36 +58,19 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	command = ft_del_node(command, i);
 	path = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
 	path = ft_append_tostr(ft_append_tostr(path, "/"), file);
-	exe->input = ft_read_file(path);
-	if (exe->input == NULL)
-	{
-		exe->error = ft_append_tostr(exe->error, "-bash: ");
-		exe->error = ft_append_tostr(exe->error, file);
-		exe->error = ft_append_tostr(exe->error,
-				": No such file or directory\n");
-		g_global.errnor = 1;
-	}
+	exe->inputfile = ft_strcpy(path);
 	free(file);
 	free(path);
 	return (command);
 }
 
-void	ft_clean_input(t_execution *exe)
-{
-	if (exe->redi != 0 && exe->input)
-	{
-		free(exe->input);
-		exe->input = NULL;
-	}
-	exe->in_redi = -1;
-}
-
+//USADO
 t_list	*ft_check_input(t_list *command, t_execution *exe)
 {
 	t_list		*act;
 	t_list		*next;
 
-	ft_clean_input(exe);
+	exe->in_redi = - 1;
 	act = command;
 	while (act)
 	{
@@ -118,7 +79,7 @@ t_list	*ft_check_input(t_list *command, t_execution *exe)
 			next = act->next->next;
 			command = ft_set_input(command, act, exe, 1);
 			act = next;
-			if (exe->input == NULL)
+			if (exe->inputfile == NULL)
 				break ;
 		}		
 		else if (ft_strequals(act->token, "<<"))

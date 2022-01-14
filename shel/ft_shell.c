@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/13 12:51:01 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:01:32 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	sig_handler(int signum)
 	}
 }
 
+//USADO
 t_list	**ft_parse_2(t_list *list)
 {
 	int		i;
@@ -76,17 +77,18 @@ t_list	**ft_parse_2(t_list *list)
 	return (result);
 }
 
+//USADO
 void	ft_execute_line(char *readl, t_execution *exe)
 {
 	t_list		**commands;
-	t_list		*l;
+	t_list		*list;
 
 	commands = NULL;
-	l = ft_lexer_2(readl);
-	commands = ft_parse_2(l);
+	list = ft_lexer_2(readl);
+	commands = ft_parse_2(list);
 	if (ft_command_checker(commands))
 		ft_execute(commands, exe);
-	ft_freelist(commands);
+	ft_freelist2d(commands);
 }
 
 int	main(int argc, char *argv[], char**envp)
@@ -98,9 +100,10 @@ int	main(int argc, char *argv[], char**envp)
 	argv = 0;
 	g_global.pid = 0;
 	exe.envp2 = ft_table_to_list(envp, exe.envp2);
-	rl_catch_signals = 0;
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	exe.defaultout = dup(1);
+	//rl_catch_signals = 0;
+	//signal(SIGINT, sig_handler);
+	//signal(SIGQUIT, sig_handler);
 	while (1)
 	{
 		readl = readline("microshell> ");
@@ -114,6 +117,6 @@ int	main(int argc, char *argv[], char**envp)
 		}
 		free(readl);
 	}
-	ft_freelist(exe.envp2);
+	ft_freelist2d(exe.envp2);
 	return (0);
 }

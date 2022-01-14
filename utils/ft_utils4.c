@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:31:53 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:32:11 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:31:54 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	ft_strisalnum(char *str)
 	return (1);
 }
 
+//USADO
 int	ft_parser_count_commands(char **src)
 {
 	int	i;

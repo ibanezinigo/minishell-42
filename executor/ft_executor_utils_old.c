@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:42:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 16:36:26 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:28:34 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,59 +52,37 @@ char	*ft_search_dir(char **path, char *search)
 	return (NULL);
 }
 
-char    *ft_get_path(t_list *command, t_execution *exe, char **args)
+void	ft_print_output(t_execution *exe)
 {
-    char	*path;
-	char	**env;
-
-	path = NULL;
-    if (access(args[0], X_OK) == 0)
-		path = ft_strcpy(args[0]);
-	else
+	if (exe->redi == -1 && exe->output)
 	{
-		env = ft_split(ft_getenv(exe->envp2[0], "PATH"), ':');
-		if (env != NULL)
-			path = ft_search_dir(env, command->token);
-		ft_free_list(env);
+		printf("%s", exe->output);
+		free(exe->output);
+		exe->output = NULL;
 	}
-	return (path);
+	if (exe->error)
+	{
+		printf("%s", exe->error);
+		free(exe->error);
+		exe->error = NULL;
+	}
 }
 
-int ft_count_commands(t_list **commands)
+void	ft_read_execve(t_execution *exe)
 {
-    int i;
+	int		nbytes;
+	char	*buff;
 
-    i = 0;
-    while (commands[i] != NULL)
-        i++;
-    return (i);
-}
-
-//USADO
-void    ft_create_pipes(t_list **commands, t_execution *exe)
-{
-    int i;
-	
-	exe->total_c = ft_count_commands(commands);
-    i = 0;
-    exe->pipes = malloc(sizeof(int) * (exe->total_c + 1));
-	exe->pids = malloc(sizeof(int) * (exe->total_c));
-    while (i < exe->total_c - 1)
-    {
-        pipe(&exe->pipes[i * 2]);
-        i = i + 1;
-    }
-}
-
-void ft_close_pipes(int *pipes, int n)
-{
-    int i;
-
-    i = 0;
-    while (i < n - 1)
-    {
-        close(pipes[i * 2]);
-        close(pipes[i * 2 + 1]);
-        i++;
-    }
+	buff = malloc(sizeof(char) * 4096);
+	nbytes = 1;
+	while (nbytes > 0)
+	{
+		nbytes = read(exe->out[0], buff, 4095);
+		buff[nbytes] = '\0';
+		if (g_global.errnor != 0)
+			exe->error = ft_append_tostr(exe->error, buff);
+		else
+			exe->output = ft_append_tostr(exe->output, buff);
+	}
+	free(buff);
 }

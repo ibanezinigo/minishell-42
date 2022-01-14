@@ -6,12 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 12:53:44 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 21:50:43 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:36:42 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
+//USADO
 char	*ft_append_tostr(char *str, char *str2)
 {
 	char	*tmp;

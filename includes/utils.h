@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:54:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/13 13:34:19 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:04:26 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*ft_itoa(int n);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 void	ft_str_to_lower(char *str);
-void	ft_freelist(t_list **l);
+void	ft_freelist2d(t_list **l);
+void	ft_freelist1d(t_list *l);
 void	ft_freecharlist(char **l);
 #endif

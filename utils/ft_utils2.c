@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:29:29 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:33:52 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:34:49 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
+//USADO
 void	ft_strcut_toend(char *str, int from)
 {
 	int	i;
@@ -25,6 +26,7 @@ void	ft_strcut_toend(char *str, int from)
 	str[i] = str[from + i];
 }
 
+//USADO
 int	ft_strequals(char *str1, char *str2)
 {
 	int	i;
@@ -43,7 +45,7 @@ int	ft_strequals(char *str1, char *str2)
 	return (1);
 }
 
-//Devuelve 1 si contiene un caractes de espaciado, si no 0
+//USADO
 int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\t'
@@ -59,7 +61,7 @@ int	ft_special_char(char c)
 	return (0);
 }
 
-//Devuelve el tamaño de un string
+//USADO
 int	ft_strlen(char *str)
 {
 	int	size;

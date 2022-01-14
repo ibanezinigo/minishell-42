@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:24:22 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:23:40 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:31:23 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../utils/utils.h"
+#include "utils.h"
 
 static char	*ft_array(char *x, unsigned int number, long int len)
 {

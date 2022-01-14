@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax.h                                           :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 13:53:15 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:17:00 by iibanez-         ###   ########.fr       */
+/*   Created: 2022/01/11 16:15:20 by iibanez-          #+#    #+#             */
+/*   Updated: 2022/01/12 21:15:28 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SYNTAX_H
-# define SYNTAX_H
-# include <stdio.h>
-# include "../define/definitions.h"
-# include "../utils/utils.h"
+#ifndef PARSER_H
+# define PARSER_H
+# include "list.h"
+# include "utils.h"
 
-int	ft_isvalidquotes(char *str);
-int	ft_forbidden_char(char *str);
-int	ft_command_checker(t_list **commands);
+t_list	**ft_table_to_list(char *table[], t_list	**commands);
 #endif

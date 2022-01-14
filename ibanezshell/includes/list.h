@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:47:50 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/04 13:23:23 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:15:21 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_H
 # define LIST_H
 
-# include "../utils/utils.h"
+# include "utils.h"
 # include <unistd.h>
 
 t_list	*ft_lstnew(char *str);

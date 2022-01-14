@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 17:55:12 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:31:45 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ int	ft_forbidden_char(char *str)
 
 int	ft_forbiden_redirection(char *str)
 {
-	if (ft_strstartwith(str, "<<"))
+	if (ft_strequals(str, "<<"))
 		printf("-bash: syntax error near unexpected token `<<'\n");
-	else if (ft_strstartwith(str, "<"))
+	else if (ft_strequals(str, "<"))
 		printf("-bash: syntax error near unexpected token `<'\n");
-	else if (ft_strstartwith(str, ">>"))
+	else if (ft_strequals(str, ">>"))
 		printf("-bash: syntax error near unexpected token `>>'\n");
-	else if (ft_strstartwith(str, ">"))
+	else if (ft_strequals(str, ">"))
 		printf("-bash: syntax error near unexpected token `>'\n");
-	else if (ft_strstartwith(str, "|"))
+	else if (ft_strequals(str, "|"))
 		printf("-bash: syntax error near unexpected token `|'\n");
 	else
 		return (0);
@@ -79,7 +79,8 @@ int	ft_forbiden_redirection(char *str)
 int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 {
 	if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<")
-		|| ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
+		|| ft_strequals(act->token, ">")
+		|| ft_strequals(act->token, ">>"))
 	{
 		if (!act->next)
 		{
@@ -89,7 +90,8 @@ int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 		else if (ft_forbiden_redirection(act->next->token))
 			return (0);
 	}
-	if (ft_strequals(act->token, "|") && (commands[*i + 1] == NULL || last == NULL))
+	if (ft_strequals(act->token, "|")
+		&& (commands[*i + 1] == NULL || last == NULL))
 	{
 		printf("-bash: syntax error near unexpected token `|'\n");
 		return (0);

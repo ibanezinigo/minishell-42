@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:49:12 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 19:29:02 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/13 11:23:50 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "../utils/utils.h"
+# include "/System/Volumes/Data/sgoinfre/goinfre/Perso/iibanez-/Cursus/3/minishell2/includes/utils.h"
 # include <stdlib.h>
 
 struct s_tokens {
@@ -27,5 +27,5 @@ char	**ft_lexer(char *readl, t_list *envp);
 void	ft_get_next_token(struct s_tokens *tokens);
 int		ft_count_tokens(char *str);
 void	ft_get_normal_string(struct s_tokens *tokens);
-
+t_list	*ft_lexer_2(char *readl);
 #endif

@@ -2,11 +2,11 @@ NAME = minishell
 
 CC=gcc
 
-CFLAGS= -Wall -Werror -Wextra
+CFLAGS= -fsanitize=address -g3
 
 BUILTIN = ft_cd ft_echo ft_env ft_exit ft_export ft_pwd ft_unset
 
-EXECUTOR = ft_executor_utils ft_executor ft_input ft_output
+EXECUTOR = ft_executor_utils ft_executor ft_input ft_output ft_dup
 
 LEXER = lexer_count_tokens lexer_get_tokens_aux lexer_get_tokens lexer
 
@@ -34,7 +34,7 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib  -fsanitize=address -g3
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib 
 
 %.o: %.c
 		@${CC} ${CFLAGS} -I ~/.brew/opt/readline/include -I /System/Volumes/Data/sgoinfre/goinfre/Perso/iibanez-/Cursus/3/minishell2/includes -c $< -o $@

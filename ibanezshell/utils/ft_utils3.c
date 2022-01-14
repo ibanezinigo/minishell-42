@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:30:56 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 18:31:09 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:33:12 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-//Copia un string en una nueva dirección de memoria
+//USADO
 char	*ft_strcpy(char *src)
 {
 	char	*dest;
@@ -80,6 +80,7 @@ char	*ft_strcat(char *dst, char *src)
 	return (result);
 }
 
+//USADO
 int	ft_strcontainstext(char *str)
 {
 	int	i;

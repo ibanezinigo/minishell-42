@@ -6,12 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 20:31:45 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:35:57 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "syntax.h"
 
+//USADO
 int	ft_isvalidquotes(char *str)
 {
 	char	quote;
@@ -35,6 +36,7 @@ int	ft_isvalidquotes(char *str)
 	return (1);
 }
 
+//USADO
 int	ft_forbidden_char(char *str)
 {
 	char	quote;
@@ -59,6 +61,7 @@ int	ft_forbidden_char(char *str)
 	return (1);
 }
 
+//USADO
 int	ft_forbiden_redirection(char *str)
 {
 	if (ft_strequals(str, "<<"))
@@ -76,6 +79,7 @@ int	ft_forbiden_redirection(char *str)
 	return (1);
 }
 
+//USADO
 int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 {
 	if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<")
@@ -99,6 +103,7 @@ int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 	return (1);
 }
 
+//USADO
 int	ft_command_checker(t_list **commands)
 {
 	t_list	*act;

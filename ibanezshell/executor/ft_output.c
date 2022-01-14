@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_output.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:52:35 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 17:47:39 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:31:28 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,56 +38,31 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 	return (command);
 }
 
-t_list	*ft_check_output(t_list *command, t_execution *exe)
+void	ft_output(t_list *command, t_execution *exe)
 {
-	t_list		*act;
-	t_list		*next;
+	t_list	*node;
+	t_list	*next;
 
+	exe->outputfile = NULL;
 	exe->redi = -1;
-	act = command;
-	while (act)
+	node = command;
+	while (node)
 	{
-		if (ft_strequals(act->token, ">") || ft_strequals(act->token, ">>"))
+		if (ft_strequals(node->token, ">") || ft_strequals(node->token, ">>"))
 		{
-			next = act->next->next;
-			command = ft_set_output(command, act, exe);
-			act = next;
+			next = node->next->next;
+			ft_set_output(command, node, exe);
+			node = next;
 		}
-		else if (ft_strequals(act->token, "|"))
+		else if (ft_strequals(node->token, "|"))
 		{
 			if (exe->redi == -1)
 				exe->redi = 0;
-			next = act->next;
-			command = ft_del_node(command, ft_node_position(command, act));
-			act = next;
+			next = node->next;
+			command = ft_del_node(command, ft_node_position(command, node));
+			node = next;
 		}
 		else
-			act = act->next;
-	}
-	return (command);
-}
-
-void	ft_redirect_output(t_execution *exe)
-{
-	int	fd;
-
-	if (exe->redi == 0)
-	{
-		exe->input = ft_strcpy(exe->output);
-		free(exe->output);
-		exe->output = NULL;
-	}
-	else if (exe->redi == 1 || exe->redi == 2)
-	{
-		if (exe->redi == 1)
-			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755);
-		else
-			fd = open(exe->outputfile, O_RDWR | O_CREAT | O_APPEND, 0755);
-		write(fd, exe->output, ft_strlen(exe->output));
-		free(exe->output);
-		free(exe->input);
-		close (fd);
-		exe->input = NULL;
-		exe->output = NULL;
+			node = node->next;
 	}
 }

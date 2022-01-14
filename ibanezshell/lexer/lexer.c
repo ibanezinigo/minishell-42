@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:13:30 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/13 12:49:21 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:34:33 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*ft_envars(char *readl, t_list *envp)
 	return (ft_strcpy(result));
 }
 
-#include <stdio.h>
+//USADO
 t_list	*ft_lexer_2(char *readl)
 {
 	char 	*str;
@@ -107,7 +107,7 @@ t_list	*ft_lexer_2(char *readl)
 		ft_strcut_toend(str, i);
 		i = 0;
 		quote = '\0';
-		token = malloc(ft_strlen(str));
+		token = malloc(ft_strlen(str) + 1);
 		while ((ft_isspace(str[i]) == 0 && str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != ';' && str[i] != '&' && str[i] != '\0') || quote != '\0')
 		{
 			token[i] = str[i];
@@ -137,6 +137,7 @@ t_list	*ft_lexer_2(char *readl)
 			ft_lstadd_back(start, l);
 		free(token);
 	}
+	free(str);
 	return (start);
 }
 

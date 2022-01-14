@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:22:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/13 15:50:12 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:00:54 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ typedef struct s_list
 
 typedef struct s_execution
 {
-	int		out[2];
-	int		in[2];
+	int		*pipes;
+	int		*pids;
+	int		defaultout;
+	int		total_c;
+	int		total_f;
 	int		redi;
-	int		in_redi;
 	char	*outputfile;
 	char	*output;
-	char	*input;
+	int		in_redi;
+	char	*inputfile;
 	char	*error;
 	t_list	**envp2;
 }	t_execution;

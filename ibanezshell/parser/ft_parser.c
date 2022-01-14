@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:37:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/03 18:02:54 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:31:42 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+//USADO
 t_list	**ft_table_to_list(char *table[], t_list	**commands)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:29:46 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 19:28:32 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:34:27 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	ft_env(t_execution *exe)
 	t_list	*tmp;
 
 	tmp = exe->envp2[0];
-	exe->output = malloc(1);
-	exe->output[0] = '\0';
 	while (tmp)
 	{
-		exe->output = ft_append_tostr(exe->output, tmp->token);
-		exe->output = ft_append_tostr(exe->output, "\n");
+		write(1, tmp->token, ft_strlen(tmp->token));
+		write(1, "\n", 1);
 		tmp = tmp->next;
 	}
 	g_global.errnor = 0;

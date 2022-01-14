@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:30:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/12 19:28:33 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:29:36 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_pwd(t_execution *exe)
 
 	result = malloc(sizeof(char) * 2500);
 	getcwd(result, 2500);
-	exe->output = ft_strcat(result, "\n");
+	write(1, result, ft_strlen(result));
+	write(1, "\n", 1);
 	g_global.errnor = 0;
 	free(result);
 }

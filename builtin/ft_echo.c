@@ -12,20 +12,20 @@
 
 #include "builtin.h"
 
-void	ft_echo_arguments(int *start, t_list *tmp, int *n)
+void	ft_echo_arguments(int *start, t_list *node, int *n)
 {
 	int	j;
 
-	if (*start == 0 && tmp->token[0] == '-' && ft_strlen(tmp->token) > 1)
+	if (*start == 0 && node->token[0] == '-' && ft_strlen(node->token) > 1)
 	{
 		j = 1;
-		while (tmp->token[j])
+		while (node->token[j])
 		{
-			if (tmp->token[j] != 'n')
+			if (node->token[j] != 'n')
 				*start = 1;
 			j++;
 		}
-		if (*start == 0 && ft_strlen(tmp->token) > 1)
+		if (*start == 0 && ft_strlen(node->token) > 1)
 			*n = 1;
 	}
 	else
@@ -36,27 +36,21 @@ void	ft_echo(t_list *command, t_execution *exe)
 {
 	int		start;
 	int		n;
-	t_list	*tmp;
+	t_list	*node;
 
 	start = 0;
 	n = 0;
-	tmp = command->next;
-	
-	while (tmp != NULL)
+	node = command->next;
+	while (node != NULL)
 	{
 		if (start == 1)
-			//exe->output = ft_append_tostr(exe->output, " ");
 			write(1, " ", 1);
-		ft_echo_arguments(&start, tmp, &n);
+		ft_echo_arguments(&start, node, &n);
 		if (start == 1)
-			//exe->output = ft_append_tostr(exe->output, tmp->token);
-			//printf("%s", tmp->token);
-			write(1, tmp->token, ft_strlen(tmp->token));
-		tmp = tmp->next;
+			write(1, node->token, ft_strlen(node->token));
+		node = node->next;
 	}
 	if (n == 0)
-		//exe->output = ft_append_tostr(exe->output, "\n");
-		//printf("\n");
 		write(1, "\n", 1);
 	g_global.errnor = 0;
 }

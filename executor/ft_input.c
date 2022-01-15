@@ -56,7 +56,8 @@ t_list	*ft_set_input(t_list *command, t_list *act, t_execution *exe, int redi)
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
-	path = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
+	//path = ft_strcpy(ft_getenv_value(exe->envp, "PWD"));
+	path = ft_strcpy(ft_getenv(exe->envp, "PWD"));
 	path = ft_append_tostr(ft_append_tostr(path, "/"), file);
 	exe->inputfile = ft_strcpy(path);
 	free(file);

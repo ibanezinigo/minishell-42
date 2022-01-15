@@ -14,14 +14,14 @@
 
 void	ft_env(t_execution *exe)
 {
-	t_list	*tmp;
+	t_list	*node;
 
-	tmp = exe->envp2[0];
-	while (tmp)
+	node = exe->envp;
+	while (node)
 	{
-		write(1, tmp->token, ft_strlen(tmp->token));
+		write(1, node->token, ft_strlen(node->token));
 		write(1, "\n", 1);
-		tmp = tmp->next;
+		node = node->next;
 	}
 	g_global.errnor = 0;
 }

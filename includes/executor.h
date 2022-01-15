@@ -32,7 +32,7 @@ int		ft_execute(t_list **commands, t_execution *e);
 char    *ft_get_path(t_list *command, t_execution *exe, char **args);
 void    ft_create_pipes(t_list **commands, t_execution *exe);
 void	ft_close_pipes(int *pipes, int n);
-void	ft_output(t_list *command, t_execution *exe);
+t_list	*ft_output(t_list *command, t_execution *exe);
 t_list	*ft_check_input(t_list *command, t_execution *exe);
 
 void	ft_default_pipes(t_execution *exe, int i);

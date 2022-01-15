@@ -12,56 +12,6 @@
 
 #include "list.h"
 
-//USADO
-t_list	*ft_lstnew(char *content)
-{
-	t_list	*rtn;
-
-	rtn = (t_list *)malloc(sizeof(t_list));
-	if (!rtn)
-		return (rtn = NULL);
-	rtn->next = NULL;
-	rtn->token = ft_strcpy(content);
-	return (rtn);
-}
-
-int	ft_lstsize(t_list *lst)
-{
-	int		i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
-//USADO
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (lst)
-		while (lst->next)
-			lst = lst->next;
-	return (lst);
-}
-
-//USADO
-void	ft_lstadd_back(t_list *last, t_list *new)
-{
-	t_list	*t;
-
-	if (last)
-	{
-		t = ft_lstlast(last);
-		t->next = new;
-	}
-	else
-		last = new;
-}
-
-//USADO
 t_list	*ft_del_node(t_list *start, int del)
 {
 	t_list	*last;

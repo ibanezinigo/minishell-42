@@ -39,21 +39,6 @@ unsigned int	ft_count_words(char const *s, char c)
 	return (nstr);
 }
 
-void	ft_free_list(char **list)
-{
-	int	i;
-
-	if (!list)
-		return ;
-	i = 0;
-	while (list[i])
-	{
-		free(list[i]);
-		i++;
-	}
-	free(list);
-}
-
 void	ft_save_words(char const *s, char c, char **list)
 {
 	int	i;
@@ -73,7 +58,7 @@ void	ft_save_words(char const *s, char c, char **list)
 		{
 			list[words] = ft_substr(s, j, i - j);
 			if (list[words] == NULL)
-				ft_free_list(list);
+				ft_free_chartable(list);
 			words++;
 		}
 	}

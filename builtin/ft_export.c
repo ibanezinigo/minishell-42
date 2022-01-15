@@ -17,7 +17,7 @@ void	ft_change_env(t_execution *exe, char *search, char *new)
 	t_list	*tmp;
 	char	*newvar;
 
-	tmp = exe->envp2[0];
+	tmp = exe->envp;
 	while (tmp)
 	{
 		if (ft_strstartwith(tmp->token, search))
@@ -35,7 +35,7 @@ void	ft_change_env(t_execution *exe, char *search, char *new)
 	newvar = ft_append_tostr(newvar, new);
 	tmp = ft_lstnew(newvar);
 	free(newvar);
-	ft_lstadd_back(exe->envp2[0], tmp);
+	ft_lstadd_back(exe->envp, tmp);
 }
 
 void	ft_export_error(t_execution *exe, char *err)
@@ -61,6 +61,6 @@ void	ft_export(t_list *command, t_execution *exe)
 		ft_export_error(exe, var[0]);
 	else if (var[1])
 		ft_change_env(exe, var[0], var[1]);
-	ft_free_list(var);
+	ft_free_chartable(var);
 	return ;
 }

@@ -23,7 +23,6 @@ typedef struct s_execution
 {
 	int		*pipes;
 	int		*pids;
-	int		defaultout;
 	int		total_c;
 	int		total_f;
 	int		redi;
@@ -32,7 +31,7 @@ typedef struct s_execution
 	int		in_redi;
 	char	*inputfile;
 	char	*error;
-	t_list	**envp2;
+	t_list	*envp;
 }	t_execution;
 
 typedef struct s_global

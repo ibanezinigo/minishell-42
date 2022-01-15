@@ -28,13 +28,13 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 		ft_env(exe);
 	else
 	{
-		args = ft_listtotable(command);
+		args = ft_list_to_char_table(command);
 		path = ft_get_path(command, exe, args);
-		env = ft_listtotable(exe->envp2[0]);
+		env = ft_list_to_char_table(exe->envp);
 		if (path)
 			execve(path, args, env);
-		ft_free_list(args);
-		ft_free_list(env);
+		ft_free_chartable(args);
+		ft_free_chartable(env);
 		free(path);
 		exit(127);
 	}
@@ -58,8 +58,7 @@ void	ft_execute_aux(t_list *command, t_execution *exe, int i)
 {
 	
 	ft_str_to_lower(command->token);
-	ft_clean_quote(command, exe->envp2[0]);
-	
+	ft_clean_quote(command, exe->envp);
 	if (ft_strequals(command->token, "cd"))
 		ft_cd(command, exe);
 	else if (ft_strequals(command->token, "export"))
@@ -73,47 +72,39 @@ void	ft_execute_aux(t_list *command, t_execution *exe, int i)
 }
 
 //USADO
-int	ft_execute(t_list **commands, t_execution *exe)
+int	ft_execute(t_list **lcommands, t_execution *exe)
 {
-	int	i;
+	int	command_n;
 	int	status;
 
-	i = 0;
+	command_n = 0;
 	status = -1;
 	exe->total_f = 0;
 	exe->inputfile = NULL;
-	ft_create_pipes(commands, exe);
-	while (commands[i] != NULL)
+	ft_create_pipes(lcommands, exe);
+	while (lcommands[command_n] != NULL)
 	{
-		ft_check_input(commands[i], exe);
-		ft_output(commands[i], exe);
-		ft_execute_aux(commands[i], exe, i);
+		lcommands[command_n] = ft_check_input(lcommands[command_n], exe);
+		lcommands[command_n] = ft_output(lcommands[command_n], exe);
+		if (lcommands[command_n])
+			ft_execute_aux(lcommands[command_n], exe, command_n);
 		if (exe->in_redi == 1 || exe->in_redi == 2)
 			free(exe->inputfile);
 		if (exe->redi == 1 || exe->redi == 2)
 			free(exe->outputfile);
-		i++;
+		command_n++;
 	}
 	ft_close_pipes(exe->pipes, exe->total_c);
-	i = 0;
-	while (i < exe->total_f)
+	command_n = 0;
+	while (command_n < exe->total_f)
 	{
 		wait(&status);	
-		i++;
+		command_n++;
 	}
 	free(exe->pipes);
 	free(exe->pids);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
 
 
 

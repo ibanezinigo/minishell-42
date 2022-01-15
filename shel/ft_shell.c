@@ -14,6 +14,7 @@
 #include "executor.h"
 #include "syntax.h"
 #include "list.h"
+#include "parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
@@ -25,8 +26,8 @@ void	sig_handler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		//rl_replace_line("", 0);
+		//rl_redisplay();
 	}
 	if (signum == 2 && g_global.pid != 0)
 		printf("\n");
@@ -37,58 +38,17 @@ void	sig_handler(int signum)
 }
 
 //USADO
-t_list	**ft_parse_2(t_list *list)
-{
-	int		i;
-	int		j;
-	t_list	*l;
-	t_list	*tmp;
-	t_list	**result;
-	
-	i = 1;
-	l = list;
-	while (l)
-	{
-		if (ft_strequals(l->token, "|"))
-			i++;
-		l = l->next;
-	}
-	result = malloc(sizeof(t_list *) * (i + 1));
-	i = 0;
-	l = list;
-	j = 0;
-	while (l)
-	{
-		if (j == 0)
-			result[i] = l;
-		j++;
-		if (ft_strequals(l->token, "|"))
-		{
-			tmp = l->next;
-			l->next = NULL;
-			l = tmp;
-			i++;
-			j = 0;
-		}
-		else
-			l = l->next;
-	}
-	result[i + 1] = NULL;
-	return (result);
-}
-
-//USADO
 void	ft_execute_line(char *readl, t_execution *exe)
 {
-	t_list		**commands;
-	t_list		*list;
+	t_list		**lcommands;
+	t_list		*tokenslinkedlist;
 
-	commands = NULL;
-	list = ft_lexer_2(readl);
-	commands = ft_parse_2(list);
-	if (ft_command_checker(commands))
-		ft_execute(commands, exe);
-	ft_freelist2d(commands);
+	lcommands = NULL;
+	tokenslinkedlist = ft_lexer(readl);
+	lcommands = ft_parse(tokenslinkedlist);
+	if (ft_command_checker(lcommands))
+		ft_execute(lcommands, exe);
+	ft_freelist2d(lcommands);
 }
 
 int	main(int argc, char *argv[], char**envp)
@@ -99,8 +59,8 @@ int	main(int argc, char *argv[], char**envp)
 	argc = 0;
 	argv = 0;
 	g_global.pid = 0;
-	exe.envp2 = ft_table_to_list(envp, exe.envp2);
-	exe.defaultout = dup(1);
+	exe.envp = NULL;
+	exe.envp = ft_words_to_list(envp, exe.envp);
 	//rl_catch_signals = 0;
 	//signal(SIGINT, sig_handler);
 	//signal(SIGQUIT, sig_handler);
@@ -117,6 +77,6 @@ int	main(int argc, char *argv[], char**envp)
 		}
 		free(readl);
 	}
-	ft_freelist2d(exe.envp2);
+	ft_freelist(exe.envp);
 	return (0);
 }

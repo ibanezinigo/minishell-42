@@ -15,5 +15,6 @@
 # include "list.h"
 # include "utils.h"
 
-t_list	**ft_table_to_list(char *table[], t_list	**commands);
+t_list	*ft_words_to_list(char *table[], t_list	*commands);
+t_list	**ft_parse(t_list *list);
 #endif

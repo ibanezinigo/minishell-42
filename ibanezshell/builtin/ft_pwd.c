@@ -6,13 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:30:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 17:29:36 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:40:28 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	ft_pwd(t_execution *exe)
+void	ft_pwd(void)
 {
 	char	*result;
 

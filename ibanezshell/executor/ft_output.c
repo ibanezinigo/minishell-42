@@ -27,7 +27,8 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
-	exe->outputfile = ft_strcpy(ft_getenv_value(exe->envp2[0], "PWD"));
+	//exe->outputfile = ft_strcpy(ft_getenv_value(exe->envp, "PWD"));
+	exe->outputfile = ft_strcpy(ft_getenv(exe->envp, "PWD"));
 	exe->outputfile = ft_append_tostr(exe->outputfile, "/");
 	exe->outputfile = ft_append_tostr(exe->outputfile, file);
 	free(file);
@@ -38,7 +39,7 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 	return (command);
 }
 
-void	ft_output(t_list *command, t_execution *exe)
+t_list	*ft_output(t_list *command, t_execution *exe)
 {
 	t_list	*node;
 	t_list	*next;
@@ -51,7 +52,7 @@ void	ft_output(t_list *command, t_execution *exe)
 		if (ft_strequals(node->token, ">") || ft_strequals(node->token, ">>"))
 		{
 			next = node->next->next;
-			ft_set_output(command, node, exe);
+			command = ft_set_output(command, node, exe);
 			node = next;
 		}
 		else if (ft_strequals(node->token, "|"))
@@ -65,4 +66,5 @@ void	ft_output(t_list *command, t_execution *exe)
 		else
 			node = node->next;
 	}
+	return (command);
 }

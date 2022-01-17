@@ -12,59 +12,23 @@
 
 #include "list.h"
 
-int	ft_node_position(t_list *start, t_list *find)
-{
-	int		i;
-	t_list	*tmp;
-
-	i = 0;
-	tmp = start;
-	while (tmp && tmp != find)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	if (tmp == find)
-		return (i);
-	else
-		return (-1);
-}
-
-char	**ft_listtotable(t_list *lst)
-{
-	char	**result;
-	t_list	*tmp;
-	int		i;
-
-	result = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
-	tmp = lst;
-	i = 0;
-	while (tmp)
-	{
-		result[i] = ft_strcpy(tmp->token);
-		tmp = tmp->next;
-		i++;
-	}
-	result[i] = NULL;
-	return (result);
-}
-
+/*
 char	*ft_getenv_value(t_list *env, char *str)
 {
-	t_list	*tmp;
+	t_list	*node;
 	int		i;
 
-	tmp = env;
-	while (tmp)
+	node = env;
+	while (node)
 	{
 		i = 0;
-		while (tmp->token[i] == str[i])
+		while (node->token[i] == str[i])
 			i++;
-		if (str[i] == '\0' && tmp->token[i] == '=')
+		if (str[i] == '\0' && node->token[i] == '=')
 		{
-			return (&tmp->token[i + 1]);
+			return (&node->token[i + 1]);
 		}
-		tmp = tmp->next;
+		node = node->next;
 	}
 	return (NULL);
-}
+}*/

@@ -6,35 +6,51 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:37:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 16:31:42 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:58:33 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-//USADO
-t_list	**ft_table_to_list(char *table[], t_list	**commands)
+#include <stdio.h>
+t_list	**ft_parse(t_list *list)
 {
-	int	i;
-	int	j;
-
-	commands = malloc(sizeof(commands) * (ft_parser_count_commands(table) + 1));
-	i = 0;
-	j = 0;
-	commands[0] = NULL;
-	while (table[i])
+	int		i;
+	int		j;
+	t_list	*l;
+	t_list	*tmp;
+	t_list	**result;
+	
+	i = 1;
+	l = list;
+	while (l)
 	{
-		if (commands[j] == NULL)
-			commands[j] = ft_lstnew(table[i]);
-		else
-			ft_lstadd_back(ft_lstlast(commands[j]), ft_lstnew(table[i]));
-		if (ft_strequals(table[i], "|"))
-		{
-			j++;
-			commands[j] = NULL;
-		}
-		i++;
+		if (ft_strequals(l->token, "|"))
+			i++;
+		l = l->next;
 	}
-	commands[j + 1] = NULL;
-	return (commands);
+	result = malloc(sizeof(t_list *) * (i + 1));
+	i = 0;
+	l = list;
+	j = 0;
+	while (l)
+	{
+		if (j == 0)
+			result[i] = l;
+		j++;
+		if (ft_strequals(l->token, "|"))
+		{
+			tmp = l->next;
+			l->next = NULL;
+			l = tmp;
+			i++;
+			j = 0;
+		}
+		else
+			l = l->next;
+	}
+	if (j == 0)
+		result[i] = NULL;
+	result[i + 1] = NULL;
+	return (result);
 }

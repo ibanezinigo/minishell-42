@@ -62,10 +62,10 @@ char    *ft_get_path(t_list *command, t_execution *exe, char **args)
 		path = ft_strcpy(args[0]);
 	else
 	{
-		env = ft_split(ft_getenv(exe->envp2[0], "PATH"), ':');
+		env = ft_split(ft_getenv(exe->envp, "PATH"), ':');
 		if (env != NULL)
 			path = ft_search_dir(env, command->token);
-		ft_free_list(env);
+		ft_free_chartable(env);
 	}
 	return (path);
 }
@@ -86,9 +86,9 @@ void    ft_create_pipes(t_list **commands, t_execution *exe)
     int i;
 	
 	exe->total_c = ft_count_commands(commands);
-    i = 0;
     exe->pipes = malloc(sizeof(int) * (exe->total_c + 1));
 	exe->pids = malloc(sizeof(int) * (exe->total_c));
+	i = 0;
     while (i < exe->total_c - 1)
     {
         pipe(&exe->pipes[i * 2]);

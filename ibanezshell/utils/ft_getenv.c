@@ -12,35 +12,8 @@
 
 #include "utils.h"
 
-int	ft_isalpha(int c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	return (0);
-}
-
-int	ft_isalnum(int c)
-{
-	if (ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	return (0);
-}
-
-int	ft_strisalnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 //USADO
+/*
 int	ft_parser_count_commands(char **src)
 {
 	int	i;
@@ -55,7 +28,7 @@ int	ft_parser_count_commands(char **src)
 		i++;
 	}
 	return (result);
-}
+}*/
 
 char	*ft_getenv(t_list *l, char *path)
 {

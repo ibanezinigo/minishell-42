@@ -24,7 +24,7 @@ void	ft_unset_error(t_execution *exe, char *err)
 void	ft_unset(t_list *command, t_execution *exe)
 {
 	char	*varname;
-	t_list	*tmp;
+	t_list	*node;
 
 	g_global.errnor = 0;
 	if (command->next == NULL || command->next->token == NULL)
@@ -36,15 +36,15 @@ void	ft_unset(t_list *command, t_execution *exe)
 		return ;
 	}
 	varname = command->next->token;
-	tmp = exe->envp2[0];
-	while (tmp)
+	node = exe->envp;
+	while (node)
 	{
-		if (ft_strstartwith(tmp->token, varname))
+		if (ft_strstartwith(node->token, varname))
 		{
-			exe->envp2[0] = ft_del_node(exe->envp2[0],
-					ft_node_position(exe->envp2[0], tmp));
+			exe->envp = ft_del_node(exe->envp,
+					ft_node_position(exe->envp, node));
 			break ;
 		}
-		tmp = tmp->next;
+		node = node->next;
 	}
 }

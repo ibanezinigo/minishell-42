@@ -13,19 +13,8 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "/System/Volumes/Data/sgoinfre/goinfre/Perso/iibanez-/Cursus/3/minishell2/includes/utils.h"
+# include "utils.h"
 # include <stdlib.h>
 
-struct s_tokens {
-	char	*buff;
-	char	**result;
-	int		n_tokens;
-	int		i;
-} t_tokens;
-
-char	**ft_lexer(char *readl, t_list *envp);
-void	ft_get_next_token(struct s_tokens *tokens);
-int		ft_count_tokens(char *str);
-void	ft_get_normal_string(struct s_tokens *tokens);
-t_list	*ft_lexer_2(char *readl);
+t_list	*ft_lexer(char *readl);
 #endif

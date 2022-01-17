@@ -2,15 +2,17 @@ NAME = minishell
 
 CC=gcc
 
-CFLAGS= -fsanitize=address -g3
+CFLAGS= -Wall -Wextra -Werror
 
 BUILTIN = ft_cd ft_echo ft_env ft_exit ft_export ft_pwd ft_unset
 
 EXECUTOR = ft_executor_utils ft_executor ft_input ft_output ft_dup
 
-LEXER = lexer_count_tokens lexer_get_tokens_aux lexer_get_tokens lexer
+LEXER = lexer
 
-LIST = list_utils list
+LIST =  ft_del_node ft_freelist ft_freelist2d ft_get_last_node \
+		ft_getenv_value ft_list_size ft_list_to_char_table \
+		ft_lst_new ft_lstadd_back ft_node_position ft_words_to_list
 
 PARSER = ft_parser
 
@@ -18,7 +20,10 @@ SHEL = ft_shell
 
 SYNTAX = ft_syntaxchecker
 
-UTILS = ft_itoa ft_split ft_utils ft_utils2 ft_utils3 ft_utils4 ft_utils5
+UTILS = ft_append_ctostr ft_append_tostr ft_atoi ft_getenv ft_isalnum \
+		ft_isalpha ft_isdigit ft_isspace ft_itoa ft_split ft_str_to_lower \
+		ft_strcat ft_strcontainstext ft_strcpy ft_strcut_toend ft_strequals \
+		ft_strisalnum ft_strlen ft_strstartwith ft_substr ft_free_chartable
 
 SRC = $(addsuffix .c, $(addprefix builtin/, $(BUILTIN))) \
 	  $(addsuffix .c, $(addprefix executor/, $(EXECUTOR))) \
@@ -34,10 +39,13 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib 
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib
+# /opt/homebrew/Cellar/readline/8.1.1/include
+# ~/.brew/opt/readline/lib
 
 %.o: %.c
-		@${CC} ${CFLAGS} -I ~/.brew/opt/readline/include -I /System/Volumes/Data/sgoinfre/goinfre/Perso/iibanez-/Cursus/3/minishell2/includes -c $< -o $@
+		@${CC} ${CFLAGS} -I ~/.brew/opt/readline/lib -I ./includes -c $< -o $@
+#-I ~/.brew/opt/readline/include 
 
 clean:
 	@rm -f $(OBJ)

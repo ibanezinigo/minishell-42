@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:52:35 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 12:31:28 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:54:56 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 	i = ft_node_position(command, act);
 	command = ft_del_node(command, i);
 	command = ft_del_node(command, i);
-	//exe->outputfile = ft_strcpy(ft_getenv_value(exe->envp, "PWD"));
 	exe->outputfile = ft_strcpy(ft_getenv(exe->envp, "PWD"));
 	exe->outputfile = ft_append_tostr(exe->outputfile, "/");
 	exe->outputfile = ft_append_tostr(exe->outputfile, file);
@@ -39,14 +38,19 @@ t_list	*ft_set_output(t_list *command, t_list *act, t_execution *exe)
 	return (command);
 }
 
+t_list	*ft_output_init(t_list *command, t_execution *exe)
+{
+	exe->outputfile = NULL;
+	exe->redi = -1;
+	return (command);
+}
+
 t_list	*ft_output(t_list *command, t_execution *exe)
 {
 	t_list	*node;
 	t_list	*next;
 
-	exe->outputfile = NULL;
-	exe->redi = -1;
-	node = command;
+	node = ft_output_init(command, exe);
 	while (node)
 	{
 		if (ft_strequals(node->token, ">") || ft_strequals(node->token, ">>"))

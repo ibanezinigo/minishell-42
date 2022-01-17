@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:11:41 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 17:01:32 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:34:23 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	sig_handler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	if (signum == 2 && g_global.pid != 0)
+	{
 		printf("\n");
+		rl_on_new_line();
+	}
 	if (signum == 3 && g_global.pid != 0)
 	{
 		printf("Quit: 3\n");
@@ -51,6 +54,16 @@ void	ft_execute_line(char *readl, t_execution *exe)
 	ft_freelist2d(lcommands);
 }
 
+void	ft_init(t_execution *exe, char **envp)
+{
+	g_global.pid = 0;
+	exe->envp = NULL;
+	exe->envp = ft_words_to_list(envp, exe->envp);
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
+}
+
 int	main(int argc, char *argv[], char**envp)
 {
 	char					*readl;
@@ -58,14 +71,10 @@ int	main(int argc, char *argv[], char**envp)
 
 	argc = 0;
 	argv = 0;
-	g_global.pid = 0;
-	exe.envp = NULL;
-	exe.envp = ft_words_to_list(envp, exe.envp);
-	//rl_catch_signals = 0;
-	//signal(SIGINT, sig_handler);
-	//signal(SIGQUIT, sig_handler);
+	ft_init(&exe, envp);
 	while (1)
 	{
+		g_global.pid = 0;
 		readl = readline("microshell> ");
 		if (!readl)
 			break ;

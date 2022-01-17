@@ -6,37 +6,12 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:48:32 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 16:35:57 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 19:03:01 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "syntax.h"
 
-//USADO
-int	ft_isvalidquotes(char *str)
-{
-	char	quote;
-	int		i;
-
-	i = 0;
-	quote = '\0';
-	while (str[i])
-	{
-		if (quote == '\0' && (str[i] == '\'' || str[i] == '\"'))
-			quote = str[i];
-		else if (str[i] == quote)
-			quote = '\0';
-		i++;
-	}
-	if (quote != '\0')
-	{
-		printf("-bash: quotes not closed.\n");
-		return (0);
-	}
-	return (1);
-}
-
-//USADO
 int	ft_forbidden_char(char *str)
 {
 	char	quote;
@@ -61,30 +36,58 @@ int	ft_forbidden_char(char *str)
 	return (1);
 }
 
-//USADO
 int	ft_forbiden_redirection(char *str)
 {
-	if (ft_strequals(str, "<<"))
+	if (ft_strstartwith(str, "<<<"))
+		printf("-bash: syntax error near unexpected token `<<<'\n");
+	else if (ft_strequals(str, "<<"))
 		printf("-bash: syntax error near unexpected token `<<'\n");
 	else if (ft_strequals(str, "<"))
 		printf("-bash: syntax error near unexpected token `<'\n");
-	else if (ft_strequals(str, ">>"))
+	else if (ft_strstartwith(str, ">>"))
 		printf("-bash: syntax error near unexpected token `>>'\n");
 	else if (ft_strequals(str, ">"))
 		printf("-bash: syntax error near unexpected token `>'\n");
-	else if (ft_strequals(str, "|"))
-		printf("-bash: syntax error near unexpected token `|'\n");
 	else
 		return (0);
 	return (1);
 }
 
-//USADO
-int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
+int	ft_check_error_1(t_list *act)
 {
-	if (ft_strequals(act->token, "<") || ft_strequals(act->token, "<<")
-		|| ft_strequals(act->token, ">")
-		|| ft_strequals(act->token, ">>"))
+	if (ft_strstartwith(act->token, "<<<"))
+	{
+		printf("-bash: syntax error near unexpected token `<<<'\n");
+		return (0);
+	}
+	else if (ft_strstartwith(act->token, ">>>"))
+	{
+		printf("-bash: syntax error near unexpected token `>>>'\n");
+		return (0);
+	}
+	else if (ft_strstartwith(act->token, "||"))
+	{
+		printf("-bash: syntax error near unexpected token `||'\n");
+		return (0);
+	}
+	else if (ft_strstartwith(act->token, "&&"))
+	{
+		printf("-bash: syntax error near unexpected token `&&'\n");
+		return (0);
+	}
+	return (1);
+}
+
+int	ft_check_error_2(t_list *act, t_list *last, t_list **commands, int *i)
+{
+	if (ft_strequals(act->token, "|")
+		&& (commands[*i + 1] == NULL || last == NULL))
+	{
+		printf("-bash: syntax error near unexpected token `|'\n");
+		return (0);
+	}
+	else if (ft_strequals(act->token, "<") || ft_strequals(act->token, ">")
+		|| ft_strequals(act->token, "<<") || ft_strequals(act->token, ">>"))
 	{
 		if (!act->next)
 		{
@@ -94,16 +97,9 @@ int	ft_check_error(t_list *act, t_list *last, t_list **commands, int *i)
 		else if (ft_forbiden_redirection(act->next->token))
 			return (0);
 	}
-	if (ft_strequals(act->token, "|")
-		&& (commands[*i + 1] == NULL || last == NULL))
-	{
-		printf("-bash: syntax error near unexpected token `|'\n");
-		return (0);
-	}
 	return (1);
 }
 
-//USADO
 int	ft_command_checker(t_list **commands)
 {
 	t_list	*act;
@@ -117,7 +113,8 @@ int	ft_command_checker(t_list **commands)
 		last = NULL;
 		while (act)
 		{
-			if (ft_check_error(act, last, commands, &i) == 0)
+			if (ft_check_error_1(act) == 0
+				|| ft_check_error_2(act, last, commands, &i) == 0)
 				return (0);
 			last = act;
 			act = act->next;

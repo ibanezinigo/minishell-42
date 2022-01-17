@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_executor_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 18:40:16 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/17 18:40:17 by iibanez-         ###   ########.fr       */
+/*   Created: 2022/01/17 17:58:24 by iibanez-          #+#    #+#             */
+/*   Updated: 2022/01/17 18:10:40 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
+#include "executor.h"
+
+char	*ft_read_dir(char *path, struct dirent *dirp)
 {
-	if (c == ' ' || c == '\n' || c == '\t'
-		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
+	char			*tmp;
+	char			*result;
+
+	tmp = ft_strcat(path, "/");
+	result = ft_strcat(tmp, dirp->d_name);
+	free(tmp);
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:28:48 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 17:14:32 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:39:36 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_echo_arguments(int *start, t_list *node, int *n)
 		*start = 1;
 }
 
-void	ft_echo(t_list *command, t_execution *exe)
+void	ft_echo(t_list *command)
 {
 	int		start;
 	int		n;

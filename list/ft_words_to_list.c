@@ -3,7 +3,6 @@
 t_list	*ft_words_to_list(char *table[], t_list	*commands)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (table[i])

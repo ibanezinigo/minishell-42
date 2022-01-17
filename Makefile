@@ -2,7 +2,7 @@ NAME = minishell
 
 CC=gcc
 
-CFLAGS= -fsanitize=address -g3
+CFLAGS= -Wall -Wextra -Werror
 
 BUILTIN = ft_cd ft_echo ft_env ft_exit ft_export ft_pwd ft_unset
 
@@ -39,12 +39,12 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L /opt/homebrew/Cellar/readline/8.1.1/include
-
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib
+# /opt/homebrew/Cellar/readline/8.1.1/include
 # ~/.brew/opt/readline/lib
 
 %.o: %.c
-		@${CC} ${CFLAGS} -I /opt/homebrew/Cellar/readline/8.1.1/include -I ./includes -c $< -o $@
+		@${CC} ${CFLAGS} -I ~/.brew/opt/readline/lib -I ./includes -c $< -o $@
 #-I ~/.brew/opt/readline/include 
 
 clean:

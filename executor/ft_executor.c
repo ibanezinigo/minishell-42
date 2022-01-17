@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 11:40:26 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 17:25:49 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:41:42 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_execute_fork(t_list *command, t_execution *exe)
 	char	**args;
 
 	if (ft_strequals(command->token, "echo"))
-		ft_echo(command, exe);
+		ft_echo(command);
 	else if (ft_strequals(command->token, "pwd"))
-		ft_pwd(exe);
+		ft_pwd();
 	else if (ft_strequals(command->token, "env"))
 		ft_env(exe);
 	else
@@ -98,14 +98,14 @@ int	ft_execute(t_list **lcommands, t_execution *exe)
 	command_n = 0;
 	while (command_n < exe->total_f)
 	{
-		wait(&status);	
+		wait(&status);
+		g_global.errnor = WEXITSTATUS(status);
 		command_n++;
 	}
 	free(exe->pipes);
 	free(exe->pids);
 	return (0);
 }
-
 
 
 

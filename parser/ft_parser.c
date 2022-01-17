@@ -6,12 +6,13 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 09:37:54 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 16:31:42 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:58:33 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+#include <stdio.h>
 t_list	**ft_parse(t_list *list)
 {
 	int		i;
@@ -48,6 +49,8 @@ t_list	**ft_parse(t_list *list)
 		else
 			l = l->next;
 	}
+	if (j == 0)
+		result[i] = NULL;
 	result[i + 1] = NULL;
 	return (result);
 }

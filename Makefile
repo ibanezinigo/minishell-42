@@ -2,7 +2,7 @@ NAME = minishell
 
 CC=gcc
 
-CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS= -Wall -Wextra -Werror
 
 BUILTIN = ft_cd ft_echo ft_env ft_exit ft_export ft_pwd ft_unset
 

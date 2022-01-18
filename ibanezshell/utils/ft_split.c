@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iibanez- <iibanez-@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:18:45 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/11 14:59:29 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:38:25 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = ft_count_words(s, c);
+	if (words == 0)
+		return (NULL);
 	list = malloc(sizeof(*list) * (words + 1));
 	if (!list)
 		return (NULL);

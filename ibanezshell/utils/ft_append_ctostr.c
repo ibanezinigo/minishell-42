@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_append_ctostr.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 18:40:39 by iibanez-          #+#    #+#             */
+/*   Updated: 2022/01/17 18:41:21 by iibanez-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 
-char    *ft_append_ctostr(char *str, char c)
+char	*ft_append_ctostr(char *str, char c)
 {
 	char	*newstr;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 12:55:31 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 14:40:05 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:48:21 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_dup_output(t_execution *exe)
 {
 	int	infd;
-	
+
 	if (exe->redi == 1)
 	{
 		infd = open(exe->outputfile, O_RDWR | O_CREAT | O_TRUNC, 0755);
@@ -34,7 +34,7 @@ void	ft_dup_input(t_execution *exe)
 {
 	int	infd;
 	int	newpipe[2];
-	
+
 	if (exe->in_redi == 1)
 	{
 		infd = open(exe->inputfile, O_RDWR, 0755);
@@ -48,7 +48,7 @@ void	ft_dup_input(t_execution *exe)
 		close(newpipe[0]);
 		close(newpipe[1]);
 	}
-	if ((exe->in_redi == 1 || exe->in_redi == 2))
+	if (exe->in_redi == 1)
 		close(infd);
 }
 
@@ -56,17 +56,14 @@ void	ft_default_pipes(t_execution *exe, int i)
 {
 	if (i == (exe->total_c - 1) && exe->total_c >= 2)
 	{
-		//ULTIMO
 		dup2(exe->pipes[(i - 1) * 2], 0);
 	}
 	if (i == 0 && exe->total_c >= 2)
 	{
-		//PRIMERO
 		dup2(exe->pipes[1], 1);
 	}
 	else if ((i < (exe->total_c - 1)) && exe->total_c >= 3)
 	{
-		//INTERMEDIO
 		dup2(exe->pipes[(i - 1) * 2], 0);
 		dup2(exe->pipes[(i * 2) + 1], 1);
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strisalnum.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 18:39:48 by iibanez-          #+#    #+#             */
+/*   Updated: 2022/01/17 18:42:22 by iibanez-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 
 int	ft_strisalnum(char *str)
@@ -7,7 +19,7 @@ int	ft_strisalnum(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 0)
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
 			return (0);
 		i++;
 	}

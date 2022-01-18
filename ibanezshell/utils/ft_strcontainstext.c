@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils3.c                                        :+:      :+:    :+:   */
+/*   ft_strcontainstext.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iibanez- <iibanez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:30:56 by iibanez-          #+#    #+#             */
-/*   Updated: 2022/01/14 16:33:12 by iibanez-         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:41:31 by iibanez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-//USADO
 int	ft_strcontainstext(char *str)
 {
 	int	i;
@@ -28,4 +27,3 @@ int	ft_strcontainstext(char *str)
 	}
 	return (0);
 }
-
